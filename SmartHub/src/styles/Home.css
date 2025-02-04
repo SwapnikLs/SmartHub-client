@@ -1,0 +1,113 @@
+.home-container {
+  width: 100%;
+  height: 100vh;
+  background-color: #0f1010; /* Dark background */
+  color: white; /* White text */
+  display: flex;
+  flex-direction: column; /* Keeps heading on top */
+  align-items: flex-start;
+  box-sizing: border-box;
+  padding: 100px 50px 50px 50px; 
+}
+
+/* App Name */ 
+.home-container h1:first-child {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.home-container > h1:first-child{
+  color:#F72C5B;
+}
+
+/* Flex container for text and image */
+.content-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center; /* Align text and image in the center */
+  justify-content: space-between; /* Equal spacing */
+}
+
+/* Left Side (Text Container) */
+.text-container {
+  width: 50%;
+  padding: 20px;
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text-container h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  max-width: 90%;
+  text-align: center;
+}
+
+/* Right Side (Image Container) */
+.image-container {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  max-width: 90%;
+  height: auto;
+}@media (max-width: 768px) {
+  .home-container {
+    padding: 100px 20px; 
+    display: flex;
+    flex-direction: column;
+    gap:50px;
+  }
+  /* App Name */
+  .home-container h1:first-child {
+    font-size: 2rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Stack text and image vertically */
+  .content-wrapper {
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Text Section */
+  .text-container {
+    height: 33.33%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .text-container h1:first-child {
+    font-size: 1.5rem;
+    width: 90%;
+  }
+
+  /* Image Section */
+  .image-container {
+    width: 100%;
+    height: 33.33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .image-container img {
+    max-width: 80%;
+    height: auto;
+  }
+}

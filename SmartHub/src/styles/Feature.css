@@ -1,0 +1,23 @@
+.feature{
+    width:18%;
+    background-color: #181C14;
+    border-radius:10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.feature h3{
+    text-align: center;
+}
+.feature-icon img{
+    width:100px;
+}
+@media (max-width:768px) {
+    .feature{
+        width: 100%;
+    }
+    .feature-icon img{
+        width:50px;
+    }
+}
