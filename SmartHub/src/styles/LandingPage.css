@@ -1,0 +1,31 @@
+/* Ensure smooth snapping behavior */
+html {
+    scroll-behavior: smooth; /* Enable smooth scrolling */
+  }
+  
+  /* Add scroll snapping to the container */
+  body {
+    scroll-snap-type: y mandatory; /* Scroll snap along the vertical axis */
+    overflow-y: scroll; /* Enable vertical scrolling */
+    height: 100%; /* Ensure full height for the body */
+  }
+  
+  /* .section style */
+  .section {
+    height: 100vh;
+    opacity: 0;
+  transform: translateY(50px); /* Start position off-screen (50px down) */
+  transition: transform 0.5s ease-out; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: start; /* Snaps each section into view */
+  }
+  .section.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  *{
+    margin: 0;
+    padding: 0;
+}
