@@ -20,10 +20,6 @@ html {
     align-items: center;
     justify-content: center;
     scroll-snap-align: start; /* Snaps each section into view */
-<<<<<<< HEAD
-=======
-    
->>>>>>> 317c10131681380ed960efe6df7e9905f2e128b8
   }
   .section.in-view {
     opacity: 1;
