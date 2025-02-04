@@ -18,7 +18,11 @@
   text-align: center;
 }
 .home-container > h1:first-child{
+<<<<<<< HEAD
   color:#6608a0;
+=======
+  color:#F72C5B;
+>>>>>>> 317c10131681380ed960efe6df7e9905f2e128b8
 }
 
 /* Flex container for text and image */

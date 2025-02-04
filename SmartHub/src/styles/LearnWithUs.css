@@ -1,6 +1,10 @@
 .learn-container {
     width: 100%;
+<<<<<<< HEAD
     height: 100vh;
+=======
+    min-height: 100vh;
+>>>>>>> 317c10131681380ed960efe6df7e9905f2e128b8
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -15,6 +19,10 @@
 .learn-container::before {
     content: "";
     position: absolute;
+<<<<<<< HEAD
+=======
+    pointer-events: none;
+>>>>>>> 317c10131681380ed960efe6df7e9905f2e128b8
     top: 0;
     left: 0;
     width: 100%;
