@@ -4,6 +4,7 @@ import Navbar from '../Components/Navbar';
 import Home from '../Components/Home';
 import AboutUs from '../Components/AboutUs';
 import LearnWithUs from '../Components/LearnWithUs';
+import Footer from '../Components/Footer';
 function LandingPage() {
     const [activeSection, setActiveSection] = useState('home');
     
@@ -46,7 +47,7 @@ function LandingPage() {
       <div id="auth" className="section">
         <LearnWithUs />
       </div>
-      <div style={{ height: "500px", background: "black" }}></div>
+      <Footer/>
 
       
     </>
