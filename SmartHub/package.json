@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
   "name": "smarthub",
-=======
-  "name": "smartknowledgehub",
->>>>>>> 317c10131681380ed960efe6df7e9905f2e128b8
   "private": true,
   "version": "0.0.0",
   "type": "module",
