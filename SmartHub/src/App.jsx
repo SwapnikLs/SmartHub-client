@@ -4,6 +4,7 @@ import {createBrowserRouter,RouterProvider} from 'react-router-dom'
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 import Explore from './Pages/explore';
+import CommunityExchange from './Pages/CommunityExchange';
 function App() {
   const router = createBrowserRouter([
     {
@@ -22,7 +23,10 @@ function App() {
       path:"/Explore",
       element:<Explore/>
     },
-    
+    {
+      path:"/community",
+      element:<CommunityExchange/>
+    }
     
   ])
   return (
