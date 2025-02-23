@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import "./Header.css"
+import { NavLink } from 'react-router-dom';
+import "./Header.css";
 import MultiDropdown from '../../GlobalComponents/DropDown/Dropdown';
+
 import hamburger from "../../../assets/hamburger-menu.svg";
 import resourcelibrary from "../../../assets/resourcelibrary.svg";
 import genre from "../../../assets/genre.svg";
@@ -22,10 +24,8 @@ const Header = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState("Resource Library"); // Default active link
 
   const handleSearchChange = (e) => setSearchQuery(e.target.value);
-  const handleLinkClick = (linkName) => setActiveLink(linkName); // Update active link state
 
   return (
     <div className="header-wrapper">
@@ -43,55 +43,27 @@ const Header = () => {
         onMouseLeave={() => setIsSidebarOpen(false)}
       >
         <nav className="sidebar-links">
-          <a 
-            href="#" 
-            className={activeLink === "Resource Library" ? "active" : ""}
-            onClick={() => handleLinkClick("Resource Library")}
-          >
-            <img src={resourcelibrary} width={"30px"} alt="" /> Resource Library
-          </a>
-          <a 
-            href="#" 
-            className={activeLink === "Smart Picks" ? "active" : ""}
-            onClick={() => handleLinkClick("Smart Picks")}
-          >
-            <img src={smartpick} width={"30px"} alt="" /> Smart Picks
-          </a>
-          <a 
-            href="#" 
-            className={activeLink === "Community Exchange" ? "active" : ""}
-            onClick={() => handleLinkClick("Community Exchange")}
-          >
-            <img src={communityexchange} width={"30px"} alt="" /> Community Exchange
-          </a>
-          <a 
-            href="#" 
-            className={activeLink === "Request a Book" ? "active" : ""}
-            onClick={() => handleLinkClick("Request a Book")}
-          >
-            <img src={requestabook} width={"30px"} alt="" /> Request a Book
-          </a>
-          <a 
-            href="#" 
-            className={activeLink === "Admin Panel" ? "active" : ""}
-            onClick={() => handleLinkClick("Admin Panel")}
-          >
-            <img src={adminpanel} width={"30px"} alt="" /> Admin Panel
-          </a>
-          <a 
-            href="#" 
-            className={activeLink === "Genres" ? "active" : ""}
-            onClick={() => handleLinkClick("Genres")}
-          >
-            <img src={genre} width={"30px"} alt="" /> Genres
-          </a>
-          <a 
-            href="#" 
-            className={activeLink === "Support" ? "active" : ""}
-            onClick={() => handleLinkClick("Support")}
-          >
-            <img src={support} width={"30px"} alt="" /> Support
-          </a>
+          <NavLink to="/resource-library" activeClassName="active">
+            <img src={resourcelibrary} width="30px" alt="" /> Resource Library
+          </NavLink>
+          <NavLink to="/smart-picks" activeClassName="active">
+            <img src={smartpick} width="30px" alt="" /> Smart Picks
+          </NavLink>
+          <NavLink to="/community" activeClassName="active">
+            <img src={communityexchange} width="30px" alt="" /> Community Exchange
+          </NavLink>
+          <NavLink to="/request-book" activeClassName="active">
+            <img src={requestabook} width="30px" alt="" /> Request a Book
+          </NavLink>
+          <NavLink to="/admin-panel" activeClassName="active">
+            <img src={adminpanel} width="30px" alt="" /> Admin Panel
+          </NavLink>
+          <NavLink to="/genres" activeClassName="active">
+            <img src={genre} width="30px" alt="" /> Genres
+          </NavLink>
+          <NavLink to="/support" activeClassName="active">
+            <img src={support} width="30px" alt="" /> Support
+          </NavLink>
         </nav>
       </div>
 
@@ -111,7 +83,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div>  
   );
 };
 
