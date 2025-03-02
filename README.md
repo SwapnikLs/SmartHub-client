@@ -23,5 +23,6 @@ Ensure you have **Node.js** and **MongoDB** installed on your machine.
 ### Installation  
 ```sh
 git clone https://github.com/your-username/library-management.git
-cd library-management
+cd Smart-Hub-Client
+cd SmartHub
 npm install
