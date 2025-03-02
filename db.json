@@ -17,15 +17,14 @@
     "name": "typicode"
   },
   "users": [
-    {
-      "id": "ddc7",
-      "email": "Swapniklatuaplly@gmail.com",
-      "password": "Swapnik"
-    },
-    {
-      "id": "a19b",
-      "email": "aryan@gmail.com",
-      "password": "aryan"
+{
+      "id": "5c34",
+      "firstName": "Swapnik",
+      "lastName": "Ls",
+      "email": "swapniklatupally@gmail.com",
+      "phone": "7288945172",
+      "dob": "2004-02-15",
+      "password": "Swapnik@2004"
     }
   ]
 }
