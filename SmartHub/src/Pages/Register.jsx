@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../Components/RegisterPageComponents/Register.css";
-
+import registerlibrary from "../assets/loginlibrary.jpg"
 const Registration = () => {
+  const [UserName, setUserName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,7 +28,7 @@ const Registration = () => {
     try {
       // 1️⃣ Check if the user already exists
       const { data } = await axios.get("http://localhost:5000/users");
-      const userExists = data.some((user) => user.email === email);
+const userExists = data.some((user) => user.email === email && user.UserName === UserName);
 
       if (userExists) {
         setError("Account already exists!");
@@ -35,7 +36,7 @@ const Registration = () => {
       }
 
       // 2️⃣ If not, register the user
-      const userData = { firstName, lastName, email, phone, dob, password };
+      const userData = { UserName,firstName, lastName, email, phone, dob, password };
       await axios.post("http://localhost:5000/users", userData);
 
       // 3️⃣ Show success & Redirect to Login
@@ -45,7 +46,13 @@ const Registration = () => {
       setError("Error registering. Please try again.");
     }
   };
-
+const backgroundImageStyle = {
+    width: '50%',
+    backgroundImage: `url(${registerlibrary})`, // Specify the path to your image
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+  };
   return (
     <div className="registration-container">
       <div className="registration-left">
@@ -54,6 +61,7 @@ const Registration = () => {
           {error && <p className="error">{error}</p>}
           {success && <p className="success">{success}</p>}
           <form onSubmit={handleSubmit}>
+            <input type="text" placeholder="User Name" value={UserName} onChange={(e) => setUserName(e.target.value)} className="input-field1" />
             <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="input-field1" />
             <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} className="input-field1" />
             <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="input-field1" />
@@ -64,6 +72,9 @@ const Registration = () => {
             <button type="submit" className="dark-button">Register</button>
           </form>
         </div>
+      </div>
+      <div className="register-right" style={backgroundImageStyle}>
+        
       </div>
     </div>
   );
