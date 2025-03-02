@@ -15,9 +15,8 @@ function LandingPage() {
     
           sections.forEach((section) => {
             const rect = section.getBoundingClientRect(); // Get the section's position relative to the viewport
-    
             // Check if the section is in the viewport at all
-            if (rect.top < window.innerHeight && rect.bottom >= 0) {
+            if (rect.top < window .innerHeight && rect.bottom >= 0) {
               section.classList.add('in-view');
               currentSection = section.getAttribute('id');
             } else {

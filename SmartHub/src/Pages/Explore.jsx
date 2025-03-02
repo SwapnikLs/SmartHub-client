@@ -38,11 +38,10 @@ const images = [
   { src: image16, alt: "Topic 16", title: "Clean Code", author: "Robert C. Martin", category: "Software Development" },
   { src: image17, alt: "Topic 17", title: "Sapiens: A Brief History of Humankind", author: "Yuval Noah Harari", category: "History" }
 ];
-
 function explore() {
   return (
     <>
-    <Header/>
+    <Header />
     <ExploreSection/>
     <TrendingBooks/>
     <AllBooks books={images}/>

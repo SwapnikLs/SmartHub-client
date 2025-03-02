@@ -1,0 +1,9 @@
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: #ff4500; /* YouTube Red */
+    transition: width 0.2s ease-in-out;
+    z-index: 1000;
+  }
