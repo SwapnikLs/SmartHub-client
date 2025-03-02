@@ -12,6 +12,9 @@
   "dependencies": {
     "@react-three/drei": "^9.121.4",
     "@react-three/fiber": "^8.17.14",
+    "axios": "^1.8.1",
+    "js-cookie": "^3.0.5",
+    "json-server": "^1.0.0-beta.3",
     "pdfjs-dist": "^4.8.69",
     "react": "^18.3.1",
     "react-dnd": "^16.0.1",
@@ -20,6 +23,8 @@
     "react-pageflip": "^2.0.3",
     "react-pdf": "^9.2.1",
     "react-router-dom": "^7.1.5",
+    "react-slick": "^0.30.3",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.15",
     "three": "^0.173.0"
   },

@@ -1,0 +1,82 @@
+
+/* User Settings */
+.user-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 500px; /* Adjust width as needed */
+}
+
+/* Label and Input Side by Side */
+.setting-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.setting-row label {
+    width: 150px; /* Fixed width for label */
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 10px;
+    text-align: right; /* Align text to right */
+}
+
+.setting-row input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    font-size: 14px;
+    background: #222;
+    color: #fff;
+}
+
+.btn-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+/* Save Button */
+.save-btn {
+    padding: 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease-in-out;
+    margin-top: 10px;
+    align-self: flex-start; /* Align button to the left */
+}
+
+.save-btn:hover {
+    background: #0056b3;
+}
+
+/* Responsive */
+   
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-container {
+        width: 95%;
+    }
+    
+    .content-box {
+        width: 95%;
+    }
+
+    .setting-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .setting-row label {
+        margin-bottom: 5px;
+    }
+}
