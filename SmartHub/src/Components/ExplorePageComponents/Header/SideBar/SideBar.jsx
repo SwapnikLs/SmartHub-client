@@ -9,7 +9,7 @@ import support from "../../../../assets/support.svg";
 import adminpanel from "../../../../assets/adminpanel.svg";
 import communityexchange from "../../../../assets/communityexchange.svg";
 import ProfileMenu from "../ProfileMenu/ProfileMenu";
-import "./Sidebar.css";
+import "./SideBar.css";
 
 const Sidebar = ({isSidebarOpen, setIsSidebarOpen }) => {
   return (
