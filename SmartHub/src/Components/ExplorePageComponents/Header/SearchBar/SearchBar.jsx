@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MultiDropdown from "../../../GlobalComponents/DropDown/Dropdown";
+import MultiDropdown from "../../../GlobalComponents/DropDown/DropDown"
 import "./SearchBar.css";
 
 const SearchBar = () => {
