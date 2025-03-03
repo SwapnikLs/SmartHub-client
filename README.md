@@ -12,7 +12,7 @@ A **full-stack** Library Management System designed to simplify book tracking, u
 
 ## 🛠️ Tech Stack  
 - 🔹 **Frontend** – React, Tailwind CSS  
-- 🔹 **Backend** – Node.js, Express.js  
+- 🔹 **Backend** – Spring Boot,JSP  
 - 🔹 **Database** – MongoDB  
 - 🔹 **Authentication** – JWT  
 
