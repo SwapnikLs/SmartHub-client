@@ -11,14 +11,26 @@ const AllBooks = ({ books }) => {
             <div key={index} className="single-book-card">
               <img src={book.src} alt={book.title} className="single-book-cover" />
               <div className="single-book-info">
-                <h4 className="single-book-title">{book.title}</h4>
-                <p className="single-book-description">{book.description}</p>
-                <p className="single-book-genre">{book.genre}</p>
-                <div className="single-book-actions">
-                  <button className="single-buy-now">Buy Now</button>
-                  <button className="single-wishlist">+</button>
-                </div>
-              </div>
+  {/* Title */}
+  <h4 className="single-book-title">{book.title}</h4>
+
+  <div className="single-book-actions">
+    <button className="single-borrow-now">Borrow Now</button>
+    <button className="single-wishlist">+</button>
+  </div>
+  {/* Genre, Type, Year */}
+  <div className="single-book-meta">
+    <span>genre</span>
+    <span>year</span>
+    <span>type</span>
+</div>
+
+  {/* Description */}
+  <p className="single-book-description">Lorem ipsum dolor, sit </p>
+
+  {/* Buttons */}
+</div>
+
             </div>
           ))}
         </div>

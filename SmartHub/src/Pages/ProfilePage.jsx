@@ -40,11 +40,7 @@ const ProfilePage = () => {
     setIsLoading(true);
   };
 
-  // If not authenticated, redirect to login
-  if (!isAuthenticated) {
-    navigate("/login");
-    return null;
-  }
+ 
 
   return (
     <div className="profile-container">

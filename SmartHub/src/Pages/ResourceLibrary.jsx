@@ -1,5 +1,4 @@
 import React from 'react'
-import ExploreSection from '../Components/ExplorePageComponents/ExploreSection/ExploreSection'
 import TrendingBooks from '../Components/ExplorePageComponents/TrendingBooks/TrendingBooks'
 import AllBooks from "../Components/ExplorePageComponents/AllBooks/AllBooks"
 import Header from '../Components/ExplorePageComponents/Header/Header'
@@ -19,6 +18,7 @@ import image14 from "../assets/14.jpg";
 import image15 from "../assets/15.jpg";
 import image16 from "../assets/16.jpg";
 import image17 from "../assets/17.jpg";
+import BookDetails from '../Components/ExplorePageComponents/ExploreSection/BookDetails'
 
 const images = [
   { src: image1, alt: "Topic 1", title: "The Quantum Realm", author: "Dr. Richard Feynman", category: "Science" },
@@ -41,8 +41,7 @@ const images = [
 function explore() {
   return (
     <>
-    <Header />
-    <ExploreSection/>
+    <BookDetails/>
     <TrendingBooks/>
     <AllBooks books={images}/>
     </>

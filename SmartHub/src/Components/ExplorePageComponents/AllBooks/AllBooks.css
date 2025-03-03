@@ -23,7 +23,6 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     justify-content: center;
-    perspective: 1000px; /* Adds depth for a 3D effect */
 }
 
 /* Book Card */
@@ -32,104 +31,120 @@
     border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
-    height: 300px;
+    height: 340px;
     position: relative;
     transform: scale(1);
-    will-change: transform;
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    z-index: 1; 
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
 }
 
-/* Book Cover */
+/* Book Cover (Initially Full Height) */
 .single-book-cover {
     width: 100%;
-    height: 100%;
+    height: 100%; /* Full height initially */
     object-fit: cover;
-    transition: transform 0.3s ease-in-out;
-}
-
-/* Disney+ Inspired Hover Effect */
-.single-book-card:hover {
-    transform: scale(1.4) rotateY(5deg); /* Enlarges with slight tilt */
-    z-index: 10;
-    position: relative;
-    transition: transform 0.4s ease-in-out 0.5s, box-shadow 0.3s ease-in-out;
-    transform-origin: center;
+    transition: height 0.3s ease-in-out;
 }
 
 /* Book Info (Hidden Initially) */
 .single-book-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
     width: 100%;
-    height: 45%; /* Covers lower portion */
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3));
+    height: 0;
+    background: rgba(0, 0, 0, 0.9);
     color: white;
-    padding: 15px;
+    padding: 0 15px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.3s ease-in-out 0.9s, transform 0.3s ease-in-out 0.9s;
+    justify-content: flex-start;
+    overflow: hidden;
+    transition: height 0.3s ease-in-out, padding 0.3s ease-in-out;
+}
+/* On Hover: Shrink Image, Show Info & Zoom Out */
+/* On Hover: Move Out, Scale, and Add Depth */
+.single-book-card:hover {
+    transform: scale(1.7, 1.5) translateY(-20px); /* Enlarges with slight width increase */
+    z-index: 10; /* Brings it to the front */
+    transition: transform 0.4s ease-in-out 1s, box-shadow 0.4s ease-in-out 1s;
 }
 
-/* Title */
-.single-book-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 5px;
+/* Smooth Reset When Mouse Leaves */
+
+
+
+/* On Hover: Shrink Image & Show Info */
+.single-book-card:hover .single-book-cover {
+    height: 60%; /* Reduce image size */
+    transition: height 0.3s ease-in-out 1s; 
 }
 
-/* Description */
-.single-book-description {
-    font-size: 13px;
-    opacity: 0.8;
-    margin-bottom: 10px;
+.single-book-card:hover .single-book-info {
+    height: 40%; /* Reveal details */
+    padding: 10px 15px;
+    transition: height 0.3s ease-in-out 1s, padding 0.3s ease-in-out 1s;
 }
 
-/* Genre */
-.single-book-genre {
-    font-size: 12px;
-    font-weight: bold;
-    opacity: 0.9;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-}
-
-/* Buttons */
-.single-book-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.single-buy-now {
-    background-color: white;
+/* Borrow Now Button */
+.single-borrow-now {
+    background-color: #ffcc00;  /* Bright yellow */
     color: black;
     border: none;
-    padding: 10px 14px;
-    border-radius: 6px;
+    padding: 10px 16px;
+    border-radius: 8px; /* Slightly rounded */
     cursor: pointer;
     font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
+    font-size: 14px;
+    width: 120px; /* Consistent size */
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
+.single-borrow-now:hover {
+    background-color: #ffaa00;
+    transform: scale(1.05);
+}
+
+/* Wishlist (+) Button */
 .single-wishlist {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: transparent;
     color: white;
     border: 2px solid white;
     padding: 8px 12px;
-    border-radius: 50%;
-    font-size: 18px;
+    border-radius: 8px; /* Slightly rounded */
+    font-size: 16px;
     cursor: pointer;
+    font-weight: bold;
+    width: 45px; /* Ensures a nice rectangular shape */
+    transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
-/* Show Info on Hover After Zoom */
-.single-book-card:hover .single-book-info {
-    opacity: 1;
-    transform: translateY(0);
+.single-wishlist:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}/* Book Meta Information - Force Single Line */
+.single-book-meta {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;  /* Prevents wrapping */
+    overflow: hidden;     /* Hides overflow */
+    text-overflow: ellipsis; /* Adds "..." if content is too long */
+}
+
+/* Dots between items */
+.single-book-meta span {
+    position: relative;
+    display: inline-block; /* Keeps it inline */
+}
+
+.single-book-meta span:not(:last-child)::after {
+    content: "•"; /* Dot separator */
+    margin: 0 6px;
+    color: rgba(255, 255, 255, 0.5);
 }

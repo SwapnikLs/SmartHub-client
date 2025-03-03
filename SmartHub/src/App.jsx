@@ -1,60 +1,60 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom';
 import LandingPage from './Pages/LandingPage';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
-import Explore from './Pages/Explore';
+import ResourceLibrary from './Pages/ResourceLibrary';
 import CommunityExchange from './Pages/CommunityExchange';
 import Genres from './Pages/Genres';
 import ProfilePage from "./Pages/ProfilePage";
-import { UserProvider, useUserContext } from './Context/UserContext'; // Import UserProvider and useUserContext
+import { UserProvider, useUserContext } from './Context/UserContext';
+import Header from './Components/ExplorePageComponents/Header/Header';
+import SmartPicks from './Pages/SmartPicks';
+import RequestABook from './Pages/RequestABook';
+import AdminPanel from './Pages/AdminPanel';
+import Support from './Pages/Support';
 
-// Create a PrivateRoute component to protect routes
+// ✅ Private Route to protect authenticated pages
 const PrivateRoute = ({ element }) => {
-  const { isAuthenticated } = useUserContext(); // Check if user is authenticated
-
-  if (!isAuthenticated) {
-    // If not authenticated, redirect to the login page
-    return <Navigate to="/LogIn" />;
-  }
-
-  return element; // If authenticated, render the element (component)
+  const { isAuthenticated } = useUserContext();
+  return isAuthenticated ? element : <Navigate to="/LogIn" />;
 };
 
-function App() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <LandingPage />,
-    },
-    {
-      path: "/LogIn",
-      element: <Login />,
-    },
-    {
-      path: "/Register",
-      element: <Register />,
-    },
-    {
-      path: "/Explore",
-      element: <PrivateRoute element={<Explore />} />, // Protect the Explore page with PrivateRoute
-    },
-    {
-      path: "/community",
-      element: <PrivateRoute element={<CommunityExchange />} />, // Protect the CommunityExchange page
-    },
-    {
-      path: "/Genres",
-      element: <PrivateRoute element={<Genres />} />, // Protect the Genres page
-    },
-    {
-      path: "/ProfilePage",
-      element: <PrivateRoute element={<ProfilePage />} />, // Protect the ProfilePage
-    },
-  ]);
+// 📌 Wrapper for Explore to handle nested routing
+const ExploreLayout = () => (
+  <div>
+    <Header />
+    <Outlet /> {/* 🚀 Child routes will be rendered here */}
+  </div>
+);
 
+const router = createBrowserRouter([
+  { path: "/", element: <LandingPage /> },
+  { path: "/LogIn", element: <Login /> },
+  { path: "/Register", element: <Register /> },
+
+  // ✅ Protecting Explore Section
+  {
+    path: "/explore",
+    element: <PrivateRoute element={<ExploreLayout />} />,
+    children: [
+      { index: true, element: <PrivateRoute element={<ResourceLibrary />} /> },
+      { path: "community", element: <PrivateRoute element={<CommunityExchange />} /> },
+      { path: "genres", element: <PrivateRoute element={<Genres />} /> },
+      { path: "smart-picks", element: <PrivateRoute element={<SmartPicks />} /> },
+      { path: "request-book", element: <PrivateRoute element={<RequestABook />} /> },
+      { path: "admin-panel", element: <PrivateRoute element={<AdminPanel />} /> },
+      { path: "support", element: <PrivateRoute element={<Support />} /> },
+    ],
+  },
+
+  // ✅ Protecting Profile Page
+  { path: "/ProfilePage", element: <PrivateRoute element={<ProfilePage />} /> },
+]);
+
+function App() {
   return (
-    <UserProvider> {/* Wrapping the entire app */}
+    <UserProvider>
       <RouterProvider router={router} />
     </UserProvider>
   );

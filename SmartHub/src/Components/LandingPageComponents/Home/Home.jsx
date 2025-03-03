@@ -1,7 +1,7 @@
 import React from 'react';
 import './Home.css';
 import Button from '../../GlobalComponents/Button/Button';
-import flipbook from "../../../assets/Flipbook.gif";
+import flipbook from "../../../assets/flipbook.gif";
 import { NavLink, useParams } from 'react-router-dom';
 
 function Home() {
