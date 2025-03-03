@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import LandingPage from './Pages/LandingPage';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
-import Explore from './Pages/explore';
+import Explore from './Pages/Explore';
 import CommunityExchange from './Pages/CommunityExchange';
 import Genres from './Pages/Genres';
 import ProfilePage from "./Pages/ProfilePage";
