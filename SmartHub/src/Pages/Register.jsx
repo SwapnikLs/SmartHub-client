@@ -27,7 +27,7 @@ const Registration = () => {
 
     try {
       // 1️⃣ Check if the user already exists
-      const { data } = await axios.get("http://localhost:5000/users");
+      const { data } = await axios.get("https://smarthub-server.onrender.com/users");
 const userExists = data.some((user) => user.email === email && user.UserName === UserName);
 
       if (userExists) {
@@ -37,7 +37,7 @@ const userExists = data.some((user) => user.email === email && user.UserName ===
 
       // 2️⃣ If not, register the user
       const userData = { UserName,firstName, lastName, email, phone, dob, password };
-      await axios.post("http://localhost:5000/users", userData);
+      await axios.post("https://smarthub-server.onrender.com/users", userData);
 
       // 3️⃣ Show success & Redirect to Login
       setSuccess("Registration successful! Redirecting to login...");

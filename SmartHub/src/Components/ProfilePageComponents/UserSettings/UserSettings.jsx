@@ -22,7 +22,7 @@ const UserSettings = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/users?UserName=${UserName}` // Fetch user by UserName
+          `https://smarthub-server.onrender.com/users?UserName=${UserName}` // Fetch user by UserName
         );
         
         if (response.data.length > 0) {
@@ -51,7 +51,7 @@ const UserSettings = () => {
   
     try {
       const response = await axios.get(
-        `http://localhost:5000/users?UserName=${NewUserName}`
+        `https://smarthub-server.onrender.com/users?UserName=${NewUserName}`
       );
       if (response.data.length > 0) {
         // Username already exists
@@ -92,7 +92,7 @@ const UserSettings = () => {
   
     try {
       const response = await axios.put(
-        `http://localhost:5000/users/${userData.id}`, // Update user by their ID
+        `https://smarthub-server.onrender.com/users/${userData.id}`, // Update user by their ID
         updatedUserData
       );
   

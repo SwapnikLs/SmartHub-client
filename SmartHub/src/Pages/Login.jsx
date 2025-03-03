@@ -39,7 +39,7 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.get("http://localhost:5000/users");
+      const response = await axios.get("https://smarthub-server.onrender.com/users");
       const users = response.data;
       const user = users.find(
         (u) => u.UserName === username && u.password === password
