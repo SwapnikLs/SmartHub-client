@@ -1,33 +1,37 @@
-import React, { useEffect, useState } from "react";
-import "./ProgressBar.css";
+import { useState, useEffect } from "react";
 
-const ProgressBar = ({ isLoading, onComplete }) => {
+const ProgressBar = ({ start }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    if (isLoading) {
-      setProgress(0);
-      const interval = setInterval(() => {
-        setProgress((prev) => (prev >= 90 ? 90 : prev + 10));
-      }, 50);
-
-      setTimeout(() => {
-        clearInterval(interval);
-        setProgress(100);
-        setTimeout(() => {
-          onComplete();
-        }, 300);
-      }, 500);
+    if (start) {
+      setProgress(0); // Reset progress when button is clicked
+      let interval = setInterval(() => {
+        setProgress((oldProgress) => {
+          if (oldProgress >= 100) {
+            clearInterval(interval);
+            return 100;
+          }
+          return oldProgress + 5;
+        });
+      }, 100);
 
       return () => clearInterval(interval);
     }
-  }, [isLoading, onComplete]);
+  }, [start]);
 
-  return isLoading ? (
-    <div className="progress-container">
-      <div className="progress-bar" style={{ width: `${progress}%` }}></div>
+  return (
+    <div style={{ position: "relative", width: "100%", height: "5px" }}>
+      <div
+        style={{
+          width: `${progress}%`,
+          height: "100%",
+          backgroundColor: "red",
+          transition: "width 0.1s ease-in-out",
+        }}
+      ></div>
     </div>
-  ) : null;
+  );
 };
 
 export default ProgressBar;

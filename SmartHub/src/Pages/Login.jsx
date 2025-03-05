@@ -10,7 +10,7 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // New state for loading
+  const [start, setstart] = useState(false); // New state for loading
   const [nextPath, setNextPath] = useState(null);
   
   const navigate = useNavigate(); // For navigation
@@ -20,7 +20,7 @@ const Login = () => {
 
   const handleNavigateWithDelay = (path) => {
     setNextPath(path);
-    setIsLoading(true);
+    setstart(true);
   };
   // If already authenticated, redirect to Explore page
   if (isAuthenticated) {
@@ -30,11 +30,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-    setIsLoading(true); // Start loading when the user clicks login
+    setstart(true); // Start loading when the user clicks login
 
     if (!username || !password) {
       setMessage("Please enter both username and password.");
-      setIsLoading(false); // Stop loading on error
+      setstart(false); // Stop loading on error
       return;
     }
 
@@ -65,7 +65,7 @@ const Login = () => {
       console.error("Error fetching users:", error);
       setMessage("An error occurred. Please try again later.");
     } finally {
-      setIsLoading(false); // Stop loading after the process is complete
+      setstart(false); // Stop loading after the process is complete
     }
   };
 
@@ -78,16 +78,11 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
+    <>
       <ProgressBar 
-        isLoading={isLoading} 
-        onComplete={() => {
-          if (nextPath) {
-            navigate(nextPath); // Redirect to the next path
-            setIsLoading(false); // Stop loading
-          }
-        }} 
-      />
+        start={start}
+        />
+    <div className="login-container">
       <div className="login-left">
         <div className="login-form">
           <h2>Login to Your Account</h2>
@@ -99,7 +94,7 @@ const Login = () => {
               onChange={(e) => setUsername(e.target.value)}
               required
               className="input-field1"
-            />
+              />
             <input
               type="password"
               placeholder="Password"
@@ -127,6 +122,7 @@ const Login = () => {
 
       {/* Show ProgressBar when loading */}
     </div>
+              </>
   );
 };
 
