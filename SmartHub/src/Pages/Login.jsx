@@ -1,54 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useUserContext } from "../Context/UserContext"; // Importing UserContext
+import { useUserContext } from "../Context/UserContext";
 import "../Components/LoginPageComponents/Login.css";
 import loginlibrary from "../assets/loginlibrary.jpg";
-import ProgressBar from "../Components/GlobalComponents/ProgressBar/ProgressBar"; // Import the ProgressBar component
+import ProgressBar from "../Components/GlobalComponents/ProgressBar/ProgressBar";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [start, setstart] = useState(false); // New state for loading
-  const [nextPath, setNextPath] = useState(null);
-  
-  const navigate = useNavigate(); // For navigation
+  const [loading, setLoading] = useState(false);
+  const [shake, setShake] = useState(false);
 
-  // Destructure the setUserDetails and isAuthenticated from context
+  const navigate = useNavigate();
   const { setUserDetails, isAuthenticated } = useUserContext();
 
-  const handleNavigateWithDelay = (path) => {
-    setNextPath(path);
-    setstart(true);
-  };
-  // If already authenticated, redirect to Explore page
-  if (isAuthenticated) {
-    navigate("/Explore");
-  }
+  // ✅ Move navigation logic inside useEffect to avoid rendering errors
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/explore");
+      console.log("sss");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-    setstart(true); // Start loading when the user clicks login
+    setLoading(true);
 
     if (!username || !password) {
       setMessage("Please enter both username and password.");
-      setstart(false); // Stop loading on error
+      triggerShake();
+      setLoading(false);
       return;
     }
 
     try {
-      const response = await axios.get("https://smarthub-server.onrender.com/users");
-      const users = response.data;
-      const user = users.find(
-        (u) => u.UserName === username && u.password === password
-      );
+      const { data: users } = await axios.get("https://smarthub-server.onrender.com/users");
+      const user = users.find((u) => u.username === username && u.password === password);
 
       if (user) {
-        // Set user details to the global context
         setUserDetails({
-          UserName: user.UserName,
+          username: user.username,
           firstName: user.firstName,
           lastName: user.lastName,
           password: user.password,
@@ -57,72 +51,62 @@ const Login = () => {
           dob: user.dob,
           email: user.email,
         });
-        handleNavigateWithDelay("/explore")
       } else {
         setMessage("User not found. Please try again.");
+        triggerShake();
       }
     } catch (error) {
-      console.error("Error fetching users:", error);
       setMessage("An error occurred. Please try again later.");
+      triggerShake();
     } finally {
-      setstart(false); // Stop loading after the process is complete
+      setLoading(false);
     }
   };
 
-  const backgroundImageStyle = {
-    width: '50%',
-    backgroundImage: `url(${loginlibrary})`, // Specify the path to your image
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
+  // 🔄 Function to trigger shake effect
+  const triggerShake = () => {
+    setShake(true);
+    setTimeout(() => setShake(false), 500);
   };
 
   return (
     <>
-      <ProgressBar 
-        start={start}
-        />
-    <div className="login-container">
-      <div className="login-left">
-        <div className="login-form">
-          <h2>Login to Your Account</h2>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              className="input-field1"
+      <ProgressBar start={loading} />
+      <div className="login-container">
+        <div className="login-left">
+          <div className="login-form">
+            <h2>Login to Your Account</h2>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                placeholder="username"
+                value={username}
+                onChange={(e) => setusername(e.target.value)}
+                className="input-field1"
               />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="input-field1"
-            />
-            {message && <span className="error">{message}</span>}
-            <button type="submit" className="dark-button">
-              Login
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="input-field1"
+              />
+              {message && <span className={`error ${shake ? "shake" : ""}`}>{message}</span>}
+              <button type="submit" className="dark-button">
+                Login
+              </button>
+            </form>
+          </div>
+          <div className="register-section">
+            <p>Not a member? Create an account</p>
+            <button className="dark-button" onClick={() => navigate("/register")}>
+              Register
             </button>
-          </form>
+          </div>
         </div>
-
-        {/* Always Show Register Section */}
-        <div className="register-section">
-          <p>Not a member? Create an account</p>
-          <button className="dark-button" onClick={() => navigate("/register")}>
-            Register
-          </button>
-        </div>
+        <div className="login-right" style={{ width: '50%', background: `url(${loginlibrary}) center / cover no-repeat` }}></div>
       </div>
-      <div className="login-right" style={backgroundImageStyle}></div>
-
-      {/* Show ProgressBar when loading */}
-    </div>
-              </>
+    </>
   );
 };
 

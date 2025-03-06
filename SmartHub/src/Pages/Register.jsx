@@ -27,6 +27,7 @@ const [confirmpassword, setconfirmpassword] = useState("");
   const [isMatch, setisMatch] = useState(false);
   const [usernameAvailability, setusernameAvailability] = useState(null);
   const [usernameAvailabilityLoading, setusernameAvailabilityLoading] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const [emailError, setEmailError] = useState("");
@@ -175,7 +176,7 @@ const [confirmpassword, setconfirmpassword] = useState("");
     console.log("success");
         try {
           // 1️⃣ Check if the user already exists
-          const { data } = await axios.get("http://localhost:8080/api/auth");
+          const { data } = await axios.get("https://smarthub-server.onrender.com/users");
     const userExists = data.some((user) => user.email === email && user.username === username);
     
           if (userExists) {
@@ -185,11 +186,14 @@ const [confirmpassword, setconfirmpassword] = useState("");
     
           // 2️⃣ If not, register the user
           const userData = { username,firstname, lastname, email, phone, dob, password };
-          await axios.post("http://localhost:8080/api/auth/register", userData);
+          await axios.post("https://smarthub-server.onrender.com/users", userData);
     
           // 3️⃣ Show success & Redirect to Login
-          setSuccess("Registration successful! Redirecting to login...");
-          setTimeout(() => navigate("/login"), 2000);
+          setIsSuccessModalOpen(true);
+          setTimeout(() => {
+            setIsSuccessModalOpen(false);
+            navigate("/login");
+          }, 2000);
         } catch (err) {
           setError("Error registering. Please try again.");
     
@@ -359,6 +363,14 @@ const backgroundImageStyle = {
       <div className="register-right" style={backgroundImageStyle}>
         
       </div>
+      {isSuccessModalOpen && (
+      <div className="modal">
+        <div className="modal-content">
+          <h2>{success}</h2>
+          <p>Redirecting to login...</p>
+        </div>
+      </div>
+    )}
     </div>
       </>
   );

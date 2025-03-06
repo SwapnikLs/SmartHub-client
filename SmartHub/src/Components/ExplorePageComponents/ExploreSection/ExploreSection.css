@@ -12,7 +12,7 @@
     overflow: hidden;
 }
 
-/* Book Header */
+/* Book Header */ 
 .book-header {
     display: flex;
     justify-content: space-between;
@@ -32,7 +32,14 @@
 .book-info h1 {
     font-size: 32px;
     font-weight: bold;
-    color: #FFDAB3;
+    color: #ffffff;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    border-bottom: 3px solid red;
+    display: inline-block;
+    padding-bottom: 5px;
+
     margin-bottom: 10px;
 }
 

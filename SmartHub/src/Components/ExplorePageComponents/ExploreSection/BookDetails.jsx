@@ -23,7 +23,7 @@ const BookDetails = () => {
     <div className="book-details-container">
       <div className="book-header">
         <div className="book-info">
-          <h1>Origin</h1>
+          <h1 className="book-detail-heading">Origin</h1>
           <p className="author">By Dan Brown</p>
           <p className="category">Thriller / Suspense ⭐ 4.5/5</p>
           <p>

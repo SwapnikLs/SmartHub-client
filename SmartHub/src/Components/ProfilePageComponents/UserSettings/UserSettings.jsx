@@ -5,7 +5,7 @@ import Modal from "../Modal/Modal";
 import { useUserContext } from "../../../Context/UserContext"; // Import the context
 import "./UserSettings.css"
 const UserSettings = () => {
-  const { UserName, setUserDetails } = useUserContext(); // Get UserName from context
+  const { username, setUserDetails } = useUserContext(); // Get username from context
   const [userData, setUserData] = useState(null); // State to store the fetched user data
   const [FirstName, setFirstName] = useState("");
   const [LastName, setLastName] = useState("");
@@ -13,16 +13,16 @@ const UserSettings = () => {
   const [Dob, setDob] = useState("");
   const [Password, setPassword] = useState("");
   const [ConfirmPassword, setConfirmPassword] = useState("");
-  const [NewUserName, setNewUserName] = useState(""); // New state for username
+  const [Newusername, setNewusername] = useState(""); // New state for username
   const [showModal, setShowModal] = useState(false);
-  const [usernameTaken, setUsernameTaken] = useState(false); // To track if username is already taken
+  const [usernameTaken, setusernameTaken] = useState(false); // To track if username is already taken
 
   // Fetch user data by username from the server
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `https://smarthub-server.onrender.com/users?UserName=${UserName}` // Fetch user by UserName
+          `https://smarthub-server.onrender.com/users?username=${username}` // Fetch user by username
         );
         
         if (response.data.length > 0) {
@@ -32,7 +32,7 @@ const UserSettings = () => {
           setLastName(user.lastName);
           setPhone(user.phone);
           setDob(user.dob);
-          setNewUserName(user.UserName); // Set initial username
+          setNewusername(user.username); // Set initial username
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -40,25 +40,25 @@ const UserSettings = () => {
     };
 
     fetchUserData();
-  }, [UserName]); // Fetch data whenever the UserName in the context changes
+  }, [username]); // Fetch data whenever the username in the context changes
 
   // Function to check if the new username is already taken
-  const checkUsernameAvailability = async () => {
-    if (NewUserName === userData.UserName) {
-      setUsernameTaken(false); // No need to check if the username hasn't changed
+  const checkusernameAvailability = async () => {
+    if (Newusername === userData.username) {
+      setusernameTaken(false); // No need to check if the username hasn't changed
       return true;
     }
   
     try {
       const response = await axios.get(
-        `https://smarthub-server.onrender.com/users?UserName=${NewUserName}`
+        `https://smarthub-server.onrender.com/users?username=${Newusername}`
       );
       if (response.data.length > 0) {
-        // Username already exists
-        setUsernameTaken(true);
+        // username already exists
+        setusernameTaken(true);
         return false;
       }
-      setUsernameTaken(false);
+      setusernameTaken(false);
       return true;
     } catch (error) {
       console.error("Error checking username availability:", error);
@@ -68,7 +68,7 @@ const UserSettings = () => {
 
   // Function to handle save changes (trigger modal)
   const handleSaveChanges = async () => {
-    if (!await checkUsernameAvailability()) {
+    if (!await checkusernameAvailability()) {
       return; // Don't proceed if the username is taken
     }
 
@@ -80,7 +80,7 @@ const UserSettings = () => {
     console.log("Saving changes...");
   
     const updatedUserData = {
-      UserName: NewUserName,
+      username: Newusername,
       firstName: FirstName,
       lastName: LastName,
       phone: Phone,
@@ -145,16 +145,16 @@ const UserSettings = () => {
         />
       </div>
 
-      {/* Username */}
+      {/* username */}
       <div className="setting-row">
-        <label>Change Username</label>
+        <label>Change username</label>
         <input
           type="text"
           placeholder="Enter new username"
-          value={NewUserName}
-          onChange={(e) => setNewUserName(e.target.value)}
+          value={Newusername}
+          onChange={(e) => setNewusername(e.target.value)}
         />
-        {usernameTaken && <p style={{ color: 'red' }}>Username is already taken.</p>}
+        {usernameTaken && <p style={{ color: 'red' }}>username is already taken.</p>}
       </div>
 
       {/* Phone Number */}
