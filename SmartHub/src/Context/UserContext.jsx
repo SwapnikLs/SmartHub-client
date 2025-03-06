@@ -4,7 +4,13 @@ import React, { createContext, useContext, useState } from "react";
 const UserContext = createContext();
 
 // Custom hook to use UserContext
-export const useUserContext = () => useContext(UserContext);
+export const useUserContext = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("useUserContext must be used within a UserProvider");
+  }
+  return context;
+};
 
 // UserProvider component to wrap the app and provide context
 export const UserProvider = ({ children }) => {
