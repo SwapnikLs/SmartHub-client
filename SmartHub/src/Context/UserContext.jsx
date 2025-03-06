@@ -9,7 +9,7 @@ export const useUserContext = () => useContext(UserContext);
 // UserProvider component to wrap the app and provide context
 export const UserProvider = ({ children }) => {
   // State to store user details (updated)
-  const [UserName, setUserName] = useState("");
+  const [username, setusername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +21,7 @@ export const UserProvider = ({ children }) => {
 
   // Function to set user details (updated)
   const setUserDetails = (userData) => {
-    setUserName(userData.UserName);
+    setusername(userData.username);
     setFirstName(userData.firstName);
     setLastName(userData.lastName);
     setPassword(userData.password);
@@ -34,7 +34,7 @@ export const UserProvider = ({ children }) => {
 
   // Function to clear user details (logout)
   const clearUserDetails = () => {
-    setUserName("");
+    setusername("");
     setFirstName("");
     setLastName("");
     setPassword("");
@@ -48,7 +48,7 @@ export const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        UserName,
+        username,
         firstName,
         lastName,
         password,

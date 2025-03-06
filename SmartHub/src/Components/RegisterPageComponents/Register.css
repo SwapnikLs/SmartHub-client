@@ -223,7 +223,7 @@
   height: 0;
 }
 
-.slider {
+.slider1 {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -235,7 +235,7 @@
   border-radius: 34px;
 }
 
-.slider:before {
+.slider1:before {
   position: absolute;
   content: "";
   height: 14px;
@@ -374,5 +374,23 @@ li.valid .requirement-text {
     animation: shakeText 0.3s ease-in-out;
     color: red;
     font-weight: bold;
+  }
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
   }
   

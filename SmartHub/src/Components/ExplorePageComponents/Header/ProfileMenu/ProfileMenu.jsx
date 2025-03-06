@@ -9,7 +9,7 @@ import { useUserContext } from "../../../../Context/UserContext"; // Import the 
 import "./ProfileMenu.css";
 
 const ProfileMenu = () => {
-  const { UserName, email, isAuthenticated, clearUserDetails } = useUserContext(); // Access username and email from context
+  const { username, email, isAuthenticated, clearUserDetails } = useUserContext(); // Access username and email from context
   const [showMenu, setShowMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [nextPath, setNextPath] = useState(null);
@@ -17,11 +17,17 @@ const ProfileMenu = () => {
   const navigate = useNavigate();
 
   const handleNavigateWithDelay = (path, state) => {
-    setNextPath(path);
-    setNextState(state);
     setIsLoading(true);
+    
+    // Navigate immediately
+    
+    // Stop loading after navigation
+    setTimeout(() => {setIsLoading(false)
+      navigate(path, { state });
+    }
+    , 1500); 
   };
-
+  
   const handleLogout = () => {
     clearUserDetails(); // Clear the user details when logging out
     navigate("/login"); // Redirect to login page after logout
@@ -29,10 +35,7 @@ const ProfileMenu = () => {
 
   return (
     <>
-      <ProgressBar isLoading={isLoading} onComplete={() => {
-        navigate(nextPath, { state: nextState });
-        setIsLoading(false);
-      }} />
+      <ProgressBar start={isLoading}/>
 
       <div
         className="sidebar-profile"
@@ -42,17 +45,17 @@ const ProfileMenu = () => {
         <img src={userProfilePic} alt="User" className="profile-pic" />
         <div className="user-info">
           {/* Display user name and email from context */}
-          <p className="user-name">{isAuthenticated ? UserName : "Guest"}</p>
+          <p className="user-name">{isAuthenticated ? username : "Guest"}</p>
           <p className="user-email">{isAuthenticated ? email : "Not logged in"}</p>
         </div>
 
         {showMenu && (
           <div className="profile-menu">
-            <div className="menu-item" onClick={() => handleNavigateWithDelay("/ProfilePage", { activeTab: "profile" })}>
+            <div className="menu-item" onClick={() => handleNavigateWithDelay("/profilepage", { activeTab: "profile" })}>
               <img src={viewProfileIcon} alt="View Profile" className="menu-icon" />
               View Profile
             </div>
-            <div className="menu-item" onClick={() => handleNavigateWithDelay("/ProfilePage", { activeTab: "settings" })}>
+            <div className="menu-item" onClick={() => handleNavigateWithDelay("/profilepage", { activeTab: "settings" })}>
               <img src={settingsIcon} alt="User Settings" className="menu-icon" />
               User Settings
             </div>

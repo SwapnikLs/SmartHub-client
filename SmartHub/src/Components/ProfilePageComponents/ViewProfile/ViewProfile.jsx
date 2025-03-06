@@ -4,7 +4,7 @@ import userProfilePic from "../../../assets/userProfilePic.jpg"
 import { useUserContext } from "../../../Context/UserContext"; // Import useUserContext
 
 function ViewProfile() {
-      const { UserName,firstName, lastName, email, phone, dob, isAuthenticated, clearUserDetails } = useUserContext();
+      const { username,firstName, lastName, email, phone, dob, isAuthenticated } = useUserContext();
     
   return (
     <div className="profile-details">
@@ -12,7 +12,7 @@ function ViewProfile() {
       <h2>
         {firstName} {lastName}
       </h2>
-      <p>Username: {UserName}</p>
+      <p>username: {username}</p>
       <p>Email: {email}</p>
       <p>Phone: {phone}</p>
       <p>Date of Birth: {dob}</p>

@@ -49,7 +49,7 @@ const router = createBrowserRouter([
   },
 
   // ✅ Protecting Profile Page
-  { path: "/ProfilePage", element: <PrivateRoute element={<ProfilePage />} /> },
+  { path: "/profilepage", element: <PrivateRoute element={<ProfilePage />} /> },
 ]);
 
 function App() {
