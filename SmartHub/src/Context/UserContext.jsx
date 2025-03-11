@@ -43,7 +43,7 @@ export const UserProvider = ({ children }) => {
     // Save to localStorage
     localStorage.setItem("user", JSON.stringify(userData));
   };
-
+ 
   // Function to clear user details (logout)
   const clearUserDetails = () => {
     setUsername("");
