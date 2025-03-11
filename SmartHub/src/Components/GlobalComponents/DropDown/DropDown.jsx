@@ -14,6 +14,7 @@ const DropDown = ({ options }) => {
     <div
       className={`wrapper-dropdown ${open ? "active" : ""}`}
       onClick={() => setOpen(!open)}
+      onMouseLeave={() => setOpen(false)} // Hides when hovered out
     >
       <span className="selected-display">{selected}</span>
       <svg
@@ -30,13 +31,15 @@ const DropDown = ({ options }) => {
           strokeLinejoin="round"
         ></path>
       </svg>
-      <ul className="dropdown">
-        {options.map((option, index) => (
-          <li key={index} className="item" onClick={() => handleSelect(option)}>
-            {option}
-          </li>
-        ))}
-      </ul>
+      {open && ( // Ensures dropdown is only rendered when open
+        <ul className="dropdown">
+          {options.map((option, index) => (
+            <li key={index} className="item" onClick={() => handleSelect(option)}>
+              {option}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

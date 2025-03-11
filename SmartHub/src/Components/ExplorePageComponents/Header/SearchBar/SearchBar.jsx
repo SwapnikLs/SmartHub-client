@@ -9,7 +9,7 @@ const SearchBar = () => {
 
   const options = {
     filter: [
-      "Filter", "Books", "Articles", "Videos", "Genre", "Author", "Publication Year", "Language", "Format", "Availability"
+      "Filter", "Books", "Genre", "Author", "Language", "Availability"
     ],
     sort: [
       "Sort By", "Relevance", "Newest First", "Oldest First", "Most Borrowed", "Highest Rated", "Alphabetical (A-Z)", "Alphabetical (Z-A)"
