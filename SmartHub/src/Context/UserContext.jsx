@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 // Create UserContext
 const UserContext = createContext();
@@ -14,41 +14,50 @@ export const useUserContext = () => {
 
 // UserProvider component to wrap the app and provide context
 export const UserProvider = ({ children }) => {
-  // State to store user details (updated)
-  const [username, setusername] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [dob, setDob] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // isAuthenticated state
+  // Load user details from localStorage
+  const storedUser = JSON.parse(localStorage.getItem("user")) || {};
 
-  // Function to set user details (updated)
+  // State to store user details (updated)
+  const [username, setUsername] = useState(storedUser.username || "");
+  const [firstName, setFirstName] = useState(storedUser.firstName || "");
+  const [lastName, setLastName] = useState(storedUser.lastName || "");
+  const [password, setPassword] = useState(storedUser.password || "");
+  const [confirmPassword, setConfirmPassword] = useState(storedUser.confirmPassword || "");
+  const [phone, setPhone] = useState(storedUser.phone || "");
+  const [email, setEmail] = useState(storedUser.email || "");
+  const [dob, setDob] = useState(storedUser.dob || "");
+  const [isAuthenticated, setIsAuthenticated] = useState(!!storedUser.username); // If user exists, set auth to true
+
+  // Function to set user details (login)
   const setUserDetails = (userData) => {
-    setusername(userData.username);
+    setUsername(userData.username);
     setFirstName(userData.firstName);
     setLastName(userData.lastName);
     setPassword(userData.password);
     setConfirmPassword(userData.confirmPassword);
     setPhone(userData.phone);
-    setDob(userData.dob);
     setEmail(userData.email);
-    setIsAuthenticated(true); // Set authentication to true on login
-  };
+    setDob(userData.dob);
+    setIsAuthenticated(true);
 
+    // Save to localStorage
+    localStorage.setItem("user", JSON.stringify(userData));
+  };
+ 
   // Function to clear user details (logout)
   const clearUserDetails = () => {
-    setusername("");
+    setUsername("");
     setFirstName("");
     setLastName("");
     setPassword("");
     setConfirmPassword("");
     setPhone("");
-    setDob("");
     setEmail("");
-    setIsAuthenticated(false); // Set authentication to false on logout
+    setDob("");
+    setIsAuthenticated(false);
+
+    // Remove from localStorage
+    localStorage.removeItem("user");
   };
 
   return (
