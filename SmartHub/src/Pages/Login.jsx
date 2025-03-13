@@ -20,49 +20,66 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/explore");
-      console.log("sss");
     }
   }, [isAuthenticated, navigate]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage("");
-    setLoading(true);
+const API_URL = "http://localhost:8080";
 
-    if (!username || !password) {
-      setMessage("Please enter both username and password.");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setMessage("");
+  setLoading(true);
+
+  if (!username || !password) {
+    setMessage("⚠️ Please enter both username and password.");
+    triggerShake();
+    setLoading(false);
+    return;
+  }
+
+  try {
+    // ✅ Send login request
+    const response = await axios.post(`${API_URL}/api/auth/login`, {
+      username,
+      password,
+    });
+
+    // ✅ Ensure response is structured correctly
+    if (response.data.success) {
+      const user = response.data.user;
+
+      setUserDetails({
+        username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phone: user.phone,
+        dob: user.dob, // If needed, format this using moment.js
+        email: user.email,
+      });
+
+      setMessage("✅ Login successful!");
+    } else {
+      setMessage("⚠️ Login failed. Please check your credentials.");
       triggerShake();
-      setLoading(false);
-      return;
     }
-
-    try {
-      const { data: users } = await axios.get("https://smarthub-server.onrender.com/users");
-      const user = users.find((u) => u.username === username && u.password === password);
-
-      if (user) {
-        setUserDetails({
-          username: user.username,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          password: user.password,
-          confirmPassword: user.confirmPassword,
-          phone: user.phone,
-          dob: user.dob,
-          email: user.email,
-        });
-      } else {
-        setMessage("User not found. Please try again.");
-        triggerShake();
-      }
-    } catch (error) {
-      setMessage("An error occurred. Please try again later.");
-      triggerShake();
-    } finally {
-      setLoading(false);
+  } catch (error) {
+    if (error.response) {
+      const errorData = error.response.data;
+      console.log(username);
+      console.log(password);
+      
+      setMessage(`⚠️ ${errorData.message || "Login failed. Please try again."}`);
+    } else {
+      setMessage("❌ Unable to connect to the server.");
     }
-  };
+    triggerShake();
+  } finally {
+    setLoading(false);
+  }
+};
 
+  
+  
   // 🔄 Function to trigger shake effect
   const triggerShake = () => {
     setShake(true);
