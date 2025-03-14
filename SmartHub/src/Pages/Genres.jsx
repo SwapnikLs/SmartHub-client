@@ -131,12 +131,12 @@ const Genres = () => {
           <h2 className="genre-title">{genre}</h2>
           <Slider {...settings} className="slider">
             {books.map((book, index) => (
-              <div key={index} className="book-item">
-                <div className="book-card">
-                  <img src={book.cover} alt={book.title} className="book-cover" />
+              <div key={index} className="book-item1">
+                <div className="book-card1">
+                  <img src={book.cover} alt={book.title} className="book-cover1" />
                 </div>
-                <div className="book-popup">
-                  <h3 className="book-title">{book.title}</h3>
+                <div className="book-popup1">
+                  <h3 className="book-title1">{book.title}</h3>
                   <p className="book-author">by {book.author}</p>
                   <p className="book-description">{book.description}</p>
                 </div>

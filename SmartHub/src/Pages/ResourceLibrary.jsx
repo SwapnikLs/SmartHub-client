@@ -1,7 +1,5 @@
 import React from 'react'
 import TrendingBooks from '../Components/ExplorePageComponents/TrendingBooks/TrendingBooks'
-import AllBooks from "../Components/ExplorePageComponents/AllBooks/AllBooks"
-import Header from '../Components/ExplorePageComponents/Header/Header'
 import image1 from "../assets/1.jpg";
 import image2 from "../assets/2.jpg";
 import image3 from "../assets/3.jpg";
@@ -18,7 +16,12 @@ import image14 from "../assets/14.jpg";
 import image15 from "../assets/15.jpg";
 import image16 from "../assets/16.jpg";
 import image17 from "../assets/17.jpg";
-import BookDetails from '../Components/ExplorePageComponents/ExploreSection/BookDetails'
+import BookDetails from './BookDetails'
+import NewArrivals from '../Components/ExplorePageComponents/NewArrivals/NewArrivals';
+import TopPicks from '../Components/ExplorePageComponents/TopPicks/TopPicks';
+import SmartPicks from '../Components/ExplorePageComponents/SmartPicks/SmartPicks';
+import YouMayLike from '../Components/ExplorePageComponents/YouMayLike/YouMayLike';
+import ContinueReading from '../Components/ExplorePageComponents/ExploreSection/ContinueReading';
 
 const images = [
   { src: image1, alt: "Topic 1", title: "The Quantum Realm", author: "Dr. Richard Feynman", category: "Science" },
@@ -41,9 +44,12 @@ const images = [
 function explore() {
   return (
     <>
-    <BookDetails/>
     <TrendingBooks/>
-    <AllBooks books={images}/>
+    <NewArrivals/>
+    <ContinueReading/>
+    <TopPicks/>
+    <SmartPicks/>
+    <YouMayLike/>
     </>
   )
 }

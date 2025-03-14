@@ -1,0 +1,78 @@
+/* Dark Mode Main Container */
+.books-stats-box {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  width: 100%;
+  max-width: 350px;
+  margin: auto;
+  color: #ddd;
+  font-family: Arial, sans-serif;
+}
+
+/* Heading */
+.books-stats-box h2 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+/* Stats Container */
+.stats {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Individual Stat Item */
+.stat-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 12px;
+  gap: 15px;
+}
+
+/* Icon Box */
+.icon-box {
+  background: #444;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+}
+
+/* Stat Icon */
+.stat-icon {
+  font-size: 24px;
+}
+
+/* Text Box */
+.text-box {
+  flex-grow: 1;
+}
+
+.text-box h3 {
+  font-size: 16px;
+  margin: 0;
+  color: #bbb;
+}
+
+.text-box p {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  color: #fff;
+}
+
+/* Divider Line */
+.divider {
+  height: 1px;
+  background: #555;
+  width: 100%;
+  margin: 5px 0;
+}

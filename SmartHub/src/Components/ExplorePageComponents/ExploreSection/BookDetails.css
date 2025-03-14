@@ -1,3 +1,4 @@
+/* General Styling */
 .book-details-container {
     background: linear-gradient(to bottom, #1A1A1D, #000000);
     color: #F5F5F5;
@@ -12,13 +13,13 @@
     overflow: hidden;
 }
 
-/* Book Header */ 
+/* Book Header */
 .book-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
-    flex-wrap: wrap; /* Ensures items wrap on smaller screens */
+    flex-wrap: wrap;
+    gap: 20px;  
 }
 
 .book-info {
@@ -26,21 +27,20 @@
     padding: 20px;
     border-radius: 12px;
     max-width: 50%;
-    min-width: 300px; /* Prevents content from being too squeezed */
+    min-width: 300px;
 }
 
+/* Title Styling */
 .book-info h1 {
     font-size: 32px;
     font-weight: bold;
     color: #ffffff;
     text-transform: uppercase;
-    margin-bottom: 20px;
     letter-spacing: 1px;
     border-bottom: 3px solid red;
     display: inline-block;
     padding-bottom: 5px;
-
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .book-info p {
@@ -50,20 +50,23 @@
     margin-bottom: 10px;
 }
 
-.author, .category {
-    font-weight: bold;
-    color: #FFDAB3;
-    margin-top: 5px;
-    font-size: 20px;
+/* Book Cover */
+.book-cover {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    max-width: 300px;
 }
 
-.description {
-    font-style: italic;
-    font-size: 16px;
-    color: #DDDDDD;
-    margin-top: 10px;
+.book-cover img {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 5px 5px 20px rgba(255, 255, 255, 0.3);
 }
 
+/* Borrow Button */
 .borrow-btn {
     background: linear-gradient(135deg, #F0A500, #D48D00);
     color: #1A1A1D;
@@ -78,25 +81,10 @@
     box-shadow: 3px 3px 15px rgba(240, 165, 0, 0.3);
 }
 
-.borrow-btn:hover {
+.borrow-btn:hover, .see-more-btn:hover {
     background: linear-gradient(135deg, #D48D00, #A66D00);
     transform: scale(1.08);
     box-shadow: 3px 3px 20px rgba(240, 165, 0, 0.5);
-}
-
-.book-cover {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    max-width: 300px;
-}
-
-.book-cover img {
-    width: 100%;
-    max-width: 280px;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 5px 5px 20px rgba(255, 255, 255, 0.3);
 }
 
 /* Book Footer */
@@ -132,7 +120,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
     padding: 15px;
 }
 
@@ -146,11 +133,10 @@
 /* Responsive Grid for Similar Books */
 .similar-books-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 15px;
     width: 100%;
     max-height: 200px;
-    overflow: hidden;
     padding: 15px;
     transition: max-height 0.5s ease;
 }
@@ -175,7 +161,7 @@
 
 /* See More Button */
 .see-more-btn {
-    background: #FFEFC8;
+    background: linear-gradient(135deg, #FFEFC8, #FFDAB3);
     color: #1A1A1D;
     padding: 12px 18px;
     border: none;
@@ -183,11 +169,7 @@
     margin-top: 15px;
     border-radius: 8px;
     font-size: 14px;
-    transition: background 0.3s ease;
-}
-
-.see-more-btn:hover {
-    background: #D48D00;
+    transition: all 0.3s ease;
 }
 
 /* User Reviews & Ratings */
@@ -195,6 +177,13 @@
     width: 100%;
     padding: 15px;
     background: #222;
+}
+
+.reviews-heading {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #FFDAB3;
 }
 
 .review-input {
@@ -209,20 +198,7 @@
     outline: none;
 }
 
-.x {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.reviews-heading {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #FFDAB3;
-}
-
+/* Star Ratings */
 .star-rating {
     font-size: 18px;
     margin-bottom: 10px;

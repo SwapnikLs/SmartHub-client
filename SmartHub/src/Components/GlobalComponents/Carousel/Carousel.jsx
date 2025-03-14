@@ -1,25 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./Carousel.css";
+import CarouselButton from "../CarouselButton/CarouselButton";
 
-function Carousel({ images, QuickAction }) {
+function Carousel({ images }) {
   const carouselRef = useRef(null);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-
-  // Button Click Handlers
-  const handleLeftClick = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollLeft -= carouselRef.current.offsetWidth;
-    }
-  };
-
-  const handleRightClick = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollLeft += carouselRef.current.offsetWidth;
-    }
-  };
+  const navigate = useNavigate(); // Hook for navigation
 
   // Auto Scroll Effect
   useEffect(() => {
@@ -36,10 +23,28 @@ function Carousel({ images, QuickAction }) {
           carouselRef.current.scrollLeft += carouselRef.current.offsetWidth;
         }
       }
-    }, 3000); // Adjust the timing (3 sec)
+    }, 3000); // Adjust the timing
 
     return () => clearInterval(interval);
   }, [isHovered]);
+
+  // Handle Quick View Click
+  const handleQuickView = (book) => {
+      const queryString = new URLSearchParams({
+        title: book.title,
+        author: book.author,
+        category: book.category,
+        rating: book.rating,
+        total: book.total,
+        available: book.available,
+        description: book.description,
+        src: book.src, 
+        alt: book.alt || "Book Cover"
+      }).toString();
+    
+      navigate(`/bookdetails?${queryString}`);
+    
+  };
 
   return (
     <div 
@@ -48,31 +53,35 @@ function Carousel({ images, QuickAction }) {
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Left and Right Buttons */}
-      <button className="carousel-btn left-btn" onClick={handleLeftClick}>
+      <button className="carousel-btn left-btn" onClick={() => {
+        if (carouselRef.current) carouselRef.current.scrollLeft -= carouselRef.current.offsetWidth;
+      }}>
         &#10094;
       </button>
-      <button className="carousel-btn right-btn" onClick={handleRightClick}>
+
+      <button className="carousel-btn right-btn" onClick={() => {
+        if (carouselRef.current) carouselRef.current.scrollLeft += carouselRef.current.offsetWidth;
+      }}>
         &#10095;
       </button>
 
       {/* Carousel */}
       <div className="carousel" ref={carouselRef}>
         {images.map((image, index) => (
-          <div 
-            className="carousel-item" 
-            key={index}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          >
-            <img src={image.src} alt={image.alt} className="carousel-image" />
-            
-            {/* Quick Action Buttons */}
-            {QuickAction && hoveredIndex === index && (
-              <div className="quick-actions">
-                <button className="wishlist-btn">⭐ Add to Wishlist</button>
-                <button className="preview-btn">📖 Quick Preview</button>
+          <div className="carousel-item" key={index}>
+            <div className="carousel-card">
+              {/* Front Side */}
+              <div className="carousel-front">
+                <img src={image.src} alt={image.alt} />
               </div>
-            )}
+              {/* Back Side */}
+              <div className="carousel-back">
+                <div className="button-container">
+                  <CarouselButton text="Add to WishList" />
+                  <CarouselButton text="Quick View" onClick={() => handleQuickView(image)} />
+                </div>
+              </div>
+            </div>
           </div>
         ))}
       </div>

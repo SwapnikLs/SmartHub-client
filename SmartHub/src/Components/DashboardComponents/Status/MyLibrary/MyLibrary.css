@@ -1,0 +1,103 @@
+.my-library {
+    font-family: Arial, sans-serif;
+    padding: 30px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.my-library h1 {
+    text-align: left;
+    color: white;
+    font-size: 36px;
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+
+.my-library-books {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    justify-items: center;
+    margin-top: 20px;
+}
+
+.book {
+    background-color: black;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.book:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.book img {
+    border-radius: 8px;
+    margin-bottom: 15px;
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+}
+
+.book h2 {
+    font-size: 18px;
+    color: white;
+    margin: 10px 0;
+    font-weight: 500;
+}
+
+.book p {
+    font-size: 14px;
+    color: #777;
+}
+
+.progress {
+    width: 100%;
+    height: 6px;
+    background-color: #eee;
+    border-radius: 3px;
+    margin-top: 10px;
+    position: relative;
+}
+
+.progress::after {
+    content: "";
+    display: block;
+    width: 70%; /* Adjust this value dynamically based on the progress */
+    height: 100%;
+    background-color: #4CAF50;
+    border-radius: 3px;
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+    .my-library {
+        padding: 20px;
+    }
+    
+    .my-library h1 {
+        font-size: 28px;
+    }
+
+    .my-library-books {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjust grid for smaller screens */
+    }
+
+    .book img {
+        max-width: 180px; /* Adjust image size for smaller screens */
+    }
+
+    .book h2 {
+        font-size: 16px;
+    }
+
+    .book p {
+        font-size: 12px;
+    }
+}

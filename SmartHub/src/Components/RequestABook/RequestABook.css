@@ -1,0 +1,45 @@
+/* RequestABook.css - Dark Theme */
+.request-book-container {
+    max-width: 500px;
+    margin: auto;
+    margin-top: 150px;
+    padding: 20px;
+    background-color: #1e1e1e; /* Dark background */
+    color: #ffffff; /* Light text */
+    border: 1px solid #333;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(255, 255, 255, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #ffffff;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    color: #bbb; /* Slightly lighter for readability */
+}
+
+input, textarea {
+    padding: 10px;
+    margin-top: 5px;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    color: #ffffff;
+    border-radius: 4px;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #777;
+}
+
+.request-book-submit {
+    margin-top: 15px;
+    padding: 10px;
+}

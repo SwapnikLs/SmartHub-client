@@ -1,0 +1,100 @@
+.container1 {
+    width: 100%;
+    overflow-x: auto;
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+  }
+  
+  th {
+    background-color: #252525;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  tbody tr:hover {
+    background-color: #292929;
+  }
+  
+  .status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: #ffffff;
+  }
+  
+  
+  .bookInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .bookImage {
+    width: 40px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Status Colors for Dark Mode */
+  .status[style*='D9534F'] {
+    color: #fff !important;
+    background-color: #b52a2a !important;
+  }
+  
+  .status[style*='5BC0DE'] {
+    color: #fff !important;
+    background-color: #207ea3 !important;
+  } 
+  
+  .status[style*='3C763D'] {
+    color: #fff !important;
+    background-color: #2d7d2d !important;
+  }
+  
+  .status[style*='F0AD4E'] {
+    color: #fff !important;
+    background-color: #b37c23 !important;
+  }
+  .summary {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+  
+  .summary-item {
+    font-size: 14px;
+  }
+  

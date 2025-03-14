@@ -1,0 +1,51 @@
+/* Main container for current reading section */
+.current-reading-container {
+    width: 100%;
+    padding: 20px; /* Reduced padding for better fit */
+    box-sizing: border-box; /* Ensures padding does not affect the overall width */
+}
+
+/* Inner container for current reading */
+.inner-current-reading-container {
+    width: 100%;
+    height: 250px; /* Adjusted height for better proportional fit */
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    padding: 20px; /* Added padding for more space around content */
+    position: relative;
+}
+
+/* Left side content (Book title, author, etc.) */
+.left-side {
+    flex: 1;
+    padding-left: 20px;
+    color: white;
+    font-size: 1.5rem; /* Adjusted for better text scaling */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center text */
+}
+
+/* Right side content (Book image) */
+.right-side {
+    position: absolute;
+    right: 10px; /* Adjusted to bring image inside the container */
+    top: 50%;
+    transform: translateY(-50%); /* Vertically centers the image */
+}
+
+/* Styling the book image */
+.book-image {
+    width: 150px; /* Reduced size for better scaling */
+    height: auto;
+    border-radius: 4px; /* Rounded corners for the image */
+}
+
+/* Optional: You can add some hover effects for a more interactive UI */
+.inner-current-reading-container:hover {
+    background-color: #444; /* Slightly lighter on hover */
+    transition: background-color 0.3s ease;
+}
