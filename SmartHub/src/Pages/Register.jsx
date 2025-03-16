@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaTimes, FaCheck } from "react-icons/fa";
@@ -98,21 +98,26 @@ const [confirmpassword, setconfirmpassword] = useState("");
       notEmail: notEmailCheck
     });
   };
-
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
+  
+    const hasUpperCase = /[A-Z]/.test(newPassword);
+    const hasNumber = /\d/.test(newPassword);
+    const hasSpecialChar = /[\W_]/.test(newPassword);
+    const lengthCheck = newPassword.length >= 8;
   
     let strength = "weak";
     let message = "Too weak";
     let messageClass = "weak-message";
   
-    if (newPassword.length > 5) {
+    if (lengthCheck && (hasUpperCase || hasNumber || hasSpecialChar)) {
       strength = "medium";
       message = "Could be stronger";
       messageClass = "medium-message";
     }
-    if (newPassword.length > 8 && /[A-Z]/.test(newPassword) && /\d/.test(newPassword) && /[\W_]/.test(newPassword)) {
+  
+    if (lengthCheck && hasUpperCase && hasNumber && hasSpecialChar) {
       strength = "strong";
       message = "Strong password";
       messageClass = "strong-message";
@@ -122,64 +127,80 @@ const [confirmpassword, setconfirmpassword] = useState("");
     setPasswordMessage(message);
     setPasswordMessageClass(messageClass);
   };
+  
 
   const changePhone = (e) => {
     const value = e.target.value;
     setPhone(value);
   
-    if (/^[0-9]{10}$/.test(value)) {
-      setIsPhoneValid("perfect"); // Show "Perfect" while typing only if valid
+    if (value === "") {
+      setIsPhoneValid(null);
+    } else if (/^[0-9]{10}$/.test(value)) {
+      setIsPhoneValid("perfect");
     } else {
-      setIsPhoneValid(null); // No message if invalid while typing
+      setIsPhoneValid(null);
     }
   };
   
   const validatePhone = () => {
-    if (phone === "") {
-      setIsPhoneValid(null); // No message if empty
-    } else {
-      setIsPhoneValid(/^[0-9]{10}$/.test(phone) ? "valid" : "invalid"); // Shows valid/invalid on blur
+    if (!phone.trim()) {
+      setIsPhoneValid(null);
+      return;
     }
+    setIsPhoneValid(/^[0-9]{10}$/.test(phone) ? "valid" : "invalid");
   };
-  let debounceTimer = null; // Declaring debounce timer outside to ensure it persists between renders
+  
 
   const checkUsernameAvailability = async (value) => {
-      if (!value.trim()) return false; // Return false if empty input
+    if (!value.trim()) return false;
 
-      try {
-          const response = await axios.get(`http://localhost:8080/api/auth/check-username?username=${value}`);
-          return response.data.available; // Assuming API returns { available: true/false }
-      } catch (error) {
-          console.error("Error checking username availability:", error);
-          return false; // Default to false if request fails
-      }
-  };
+    try {
+        const response = await axios.get(`http://localhost:8080/api/auth/check-username?username=${value}`);
+        return response.data.available;
+    } catch (error) {
+        console.error("Error checking username availability:", error);
+        setUsernameAvailability(null); // Set to null instead of false
+        return null; // Indicate API failure
+    }
+};
+
+
+  const debounceTimer = useRef(null);
 
   const handleUsernameChange = (e) => {
-      const value = e.target.value;
-      setUsername(value);
-      setUsernameAvailabilityLoading(true); // Show spinner
-
-      // Clear the previous debounce timer
-      clearTimeout(debounceTimer);
-
-      // Set a new debounce timer for 2 seconds
-      debounceTimer = setTimeout(async () => {
-          const availability = await checkUsernameAvailability(value);
-          setUsernameAvailability(availability); // Set availability once fetched
-          setUsernameAvailabilityLoading(false); // Hide spinner after checking
-      }, 2000); // Delay check by 2 seconds after typing stops
+    const value = e.target.value;
+    setUsername(value);
+    setUsernameAvailabilityLoading(true);
+  
+    // Clear previous debounce timer
+    if (debounceTimer.current) {
+        clearTimeout(debounceTimer.current);
+    }
+  
+    if (value.length < 6) {
+      setshake(true);
+      setTimeout(() => setshake(false), 500);
+        setUsernameAvailability(false);
+        setUsernameAvailabilityLoading(false);
+        return;
+    }
+    clearTimeout(debounceTimer.current);
+    // Set a new debounce timer
+    debounceTimer.current = setTimeout(async () => {
+        const availability = await checkUsernameAvailability(value);
+        setUsernameAvailability(availability);
+        setUsernameAvailabilityLoading(false);
+    }, 2000);
   };
-
+  
   const [shake, setshake] = useState(false)
   const [startLoading, setStartLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStartLoading(false); // Reset first
-    setTimeout(() => setStartLoading(true), 10);
-  
+    setStartLoading(false);
+    
     if (
-      usernameAvailability &&
+      
       firstname &&
       lastname &&
       !emailError &&
@@ -190,10 +211,10 @@ const [confirmpassword, setconfirmpassword] = useState("");
       try {
         // 1️⃣ Register the user directly (backend handles validation)
         const userData = { username, firstname, lastname, email, phone, dob, password };
-  
+        
         await axios.post("http://localhost:8080/api/auth/register", userData);
-  
-        // 2️⃣ Success - Show modal & redirect to login
+        
+        setTimeout(() => setStartLoading(true), 10);
         setIsSuccessModalOpen(true);
         setTimeout(() => {
           setIsSuccessModalOpen(false);
@@ -209,9 +230,9 @@ const [confirmpassword, setconfirmpassword] = useState("");
         }
       }
     } else {
-      console.log("Validation failed!");
+      setError("❌ Please fill all the fields correctly before submitting");
       setshake(true);
-    }
+  }
   
     setTimeout(() => {
       setshake(false);
@@ -231,8 +252,8 @@ const backgroundImageStyle = {
       <div className="registration-left">
         <div className="registration-form">
           <h2>Create Your Account</h2>
-          {error && <p className="error">{error}</p>}
-          {success && <p className="success">{success}</p>}
+          {error && <p className={`error ${shake ? "shake" : ""}`}>{error}</p>}
+
           <form onSubmit={handleSubmit}>
           <div style={{ position: "relative", display: "inline-block", width: "100%" }}>
           <input
@@ -240,7 +261,7 @@ const backgroundImageStyle = {
   placeholder="User Name"
   value={username}
   onChange={handleUsernameChange}
-  className={`input-field1 ${usernameAvailability == null ? "":(usernameAvailability?"success":"error")}`}
+  className={`input-field1 ${usernameAvailability === null ? "" : usernameAvailability ? "success" : "error"}`}
   
   style={{
     width: "100%",
@@ -374,14 +395,7 @@ const backgroundImageStyle = {
       <div className="register-right" style={backgroundImageStyle}>
         
       </div>
-      {isSuccessModalOpen && (
-      <div className="modal">
-        <div className="modal-content">
-          <h2>{success}</h2>
-          <p>Redirecting to login...</p>
-        </div>
-      </div>
-    )}
+      
     </div>
       </>
   );
