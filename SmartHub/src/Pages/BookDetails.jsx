@@ -46,11 +46,12 @@ const BookDetails = () => {
           <h1 className="book-title">{book.title}</h1>
           <p className="book-author">By {book.author}</p>
           <p className="book-category">{book.category} ⭐ {book.rating}/5</p>
-          <p className="book-availability">
-            Total: <strong>{book.total}</strong> | Available: <strong>{book.available}</strong>
-          </p>
+          
           <p className="book-description">{book.description}</p>
+          <div className="book-details-button-container">
           <Button text="Borrow this book" />
+          <Button text="Add to WishList" />
+          </div>
         </div>
         <div className="book-cover">
           <img src={book.src} alt={book.alt} />

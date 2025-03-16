@@ -73,10 +73,9 @@ function Dashboard() {
           </>
         )}
         {activeSection === 'My Library' && <MyLibrary />}
-        {activeSection === 'OverDues' && <OverdueTable books={books} />}
+        {activeSection === 'OverDues' && <OverdueTable  />}
         {activeSection === 'Completed' && <CompletedBooks />}
         {activeSection === 'WishList' && <WishList />}
-        {activeSection === 'Favourites' && <div>Favourites Section</div>}
       </div>
     </div>
   );

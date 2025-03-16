@@ -2,16 +2,20 @@
 .book-details-container {
     background: linear-gradient(to bottom, #1A1A1D, #000000);
     color: #F5F5F5;
-    padding: 40px 20px;
+    padding: 50px 30px;
     font-family: Arial, sans-serif;
     min-height: 100vh;
-overflow-y: auto;
-
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     box-sizing: border-box;
     overflow: hidden;
+}
+.book-details-button-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 /* Book Header */
@@ -20,64 +24,68 @@ overflow-y: auto;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 20px;  
+    gap: 30px;  
 }
 
 .book-info {
     flex: 1;
-    padding: 20px;
+    padding: 30px;
     border-radius: 12px;
     max-width: 50%;
-    min-width: 300px;
+    min-width: 320px;
 }
 
 /* Title Styling */
 .book-title {
-    font-size: 32px;
+    font-size: 36px;
     font-weight: bold;
     color: #ffffff;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    border-bottom: 3px solid red;
+    letter-spacing: 2px;
+    border-bottom: 4px solid red;
     display: inline-block;
-    padding-bottom: 5px;
-    margin-bottom: 15px;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    margin-left: 12px;
 }
 
 .book-author,
 .book-category,
 .book-availability,
 .book-description {
-    font-size: 18px;
-    line-height: 1.5;
+    font-size: 20px;
+    line-height: 1.8;
     color: #dddddd;
+    margin-bottom: 15px;
 }
-.book-description{
-    margin-bottom: 20px;
+
+.book-description {
+    margin-bottom: 25px;
 }
+
 /* Book Cover */
 .book-cover {
     flex-shrink: 0;
-    max-width: 300px;
+    max-width: 320px;
     text-align: center;
 }
 
 .book-cover img {
     width: 100%;
-    border-radius: 10px;
-    box-shadow: 3px 3px 12px rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    box-shadow: 4px 4px 15px rgba(255, 255, 255, 0.3);
 }
 
 /* Borrow Button */
 .borrow-btn {
     background: linear-gradient(135deg, #1a73e8, #0051a3);
     color: white;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
     cursor: pointer;
-    margin-top: 20px;
-    border-radius: 10px;
-    font-size: 16px;
+    margin-top: 25px;
+    border-radius: 12px;
+    font-size: 18px;
     transition: background 0.3s ease-in-out;
 }
 
@@ -89,52 +97,54 @@ overflow-y: auto;
 .reviews-section {
     width: 100%;
     background: #222;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 25px;
+    border-radius: 12px;
     color: #fff;
+    margin-top: 30px;
 }
 
 .reviews-title {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .reviews-container {
-    max-height: 180px;
+    max-height: 220px;
     overflow-y: auto;
-    padding: 10px;
+    padding: 15px;
     background: #333;
-    border-radius: 5px;
-    margin-bottom: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
 .reviews-container p {
-    font-size: 16px;
-    margin-bottom: 8px;
+    font-size: 18px;
+    margin-bottom: 10px;
     border-bottom: 1px solid #444;
-    padding-bottom: 8px;
+    padding-bottom: 10px;
 }
 
 /* Review Input Form */
 .review-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .review-form input,
 .review-form textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #555;
-    border-radius: 5px;
+    border-radius: 6px;
     background: #333;
     color: white;
+    font-size: 16px;
 }
 
 .review-form button {
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 /* Responsive Design */
@@ -145,24 +155,25 @@ overflow-y: auto;
     }
 
     .book-cover {
-        max-width: 250px;
+        max-width: 270px;
     }
 }
+
 /* Ensure star-rating section adapts */
 .star-rating {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    gap: 10px; /* Space between inputs and button */
+    gap: 12px; /* Space between inputs and button */
 }
 
 /* Ensure inputs and button fit */
 .review-input {
     width: calc(100% - 20px); /* Adjust width */
-    padding: 10px;
-    border-radius: 4px;
-    font-size: 14px;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 16px;
 }
 
 /* Button spacing fix */
@@ -175,24 +186,27 @@ overflow-y: auto;
 /* Make review section auto-expand */
 .book-footer-reviews {
     width: 100%;
-    padding: 15px;
+    padding: 20px;
     background: #222;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 30px;
 }
 
 /* Ensure proper scrolling */
 .reviews-container {
     width: 100%;
-    max-height: 200px; /* Increased height */
+    max-height: 240px; /* Increased height */
     overflow-y: auto;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 12px;
+    border-radius: 10px;
 }
+
+/* Back Button Styling */
 .back-button-container {
     position: absolute;
-    top: 8px;
-    left:10px;
-    z-index:1;
+    top: 12px;
+    left: 15px;
+    z-index: 1;
 }

@@ -1,4 +1,4 @@
-.carousel-container {
+.genre-container {
   width: 85%;
   margin: auto;
   margin-top: 100px;
@@ -31,31 +31,52 @@
   height: 270px;
   overflow: hidden;
   border-radius: 10px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
 }
 
-.book-cover1 {
+/* Flip Effect */
+.book-item1:hover .book-card1 {
+  transform: rotateY(180deg);
+}
+
+/* Front Side */
+.book-front,
+.book-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+}
+
+/* Front - Book Cover */
+.book-front img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
 }
 
-.book-popup1 {
-  position: absolute;
-  bottom: -60px;
+/* Back Side */
+.book-back {
   background: rgba(0, 0, 0, 0.8);
-  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: rotateY(180deg);
+  border-radius: 10px;
   padding: 10px;
-  border-radius: 8px;
-  width: 160px;
-  text-align: center;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out, bottom 0.3s ease-in-out;
+  opacity: 0; /* Initially hidden */
+  visibility: hidden; /* Initially hidden */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.book-item1:hover .book-popup1 {
-  opacity: 1;
-  bottom: -10px;
+.book-item1:hover .book-back {
+  opacity: 1; /* Show the back on hover */
+  visibility: visible; /* Make it visible on hover */
 }
 
 .slick-list {
@@ -82,4 +103,29 @@
 
 .slick-next {
   right: -25px;
+}
+
+/* Responsive: Adjust the number of visible slides on smaller screens */
+@media (max-width: 768px) {
+  .slick-slide {
+    margin: 0 3px;
+  }
+
+  .book-card1 {
+    width: 150px;
+    height: 230px;
+  }
+
+  .slider {
+    padding: 0 20px;
+  }
+
+  .genre-title1 {
+    font-size: 18px;
+  }
+
+  /* Adjust slidesToShow for smaller devices */
+  .slick-prev, .slick-next {
+    display: none;
+  }
 }

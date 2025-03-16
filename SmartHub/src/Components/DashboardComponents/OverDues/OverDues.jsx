@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaClock, FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa';
 import './OverDues.css';
+import { useBooks } from '../../../Context/BookContext';
 
 const statusStyles = {
   OVERDUE: { color: '#D9534F', icon: <FaExclamationTriangle />, label: 'Overdue' },
@@ -9,7 +10,9 @@ const statusStyles = {
   PAID: { color: '#5CB85C', textColor: '#3C763D', icon: <FaCheckCircle />, label: 'Paid' },
 };
 
-const OverdueTable = ({ books }) => {
+const OverdueTable = () => {
+  const { borrowedBooks } = useBooks(); // Accessing books from context
+
   const getDaysOverdue = (dueDate) => {
     const due = new Date(dueDate);
     const today = new Date();
@@ -18,7 +21,7 @@ const OverdueTable = ({ books }) => {
   };
 
   // Calculate summary counts
-  const summary = books.reduce(
+  const summary = borrowedBooks.reduce(
     (acc, book) => {
       acc[book.status] = (acc[book.status] || 0) + 1;
       return acc;
@@ -55,7 +58,7 @@ const OverdueTable = ({ books }) => {
           </tr>
         </thead>
         <tbody>
-          {books.map((book, index) => {
+          {borrowedBooks.map((book, index) => {
             const borrowDate = new Date(book.borrowDate);
             const dueDate = new Date(book.dueDate);
             const daysOverdue = getDaysOverdue(dueDate);
@@ -72,8 +75,8 @@ const OverdueTable = ({ books }) => {
                   </span>
                 </td>
                 <td className="bookInfo">
-                  {book.image && <img src={book.image} alt={book.name} className="bookImage" />}
-                  <span>{book.name}</span>
+                  {book.cover && <img src={book.cover} alt={book.title} className="bookImage" />}
+                  <span>{book.title}</span>
                 </td>
                 <td>{isOverdue ? `${daysOverdue} days overdue` : '-'}</td>
               </tr>

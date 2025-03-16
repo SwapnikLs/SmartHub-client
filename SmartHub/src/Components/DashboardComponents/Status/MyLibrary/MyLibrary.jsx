@@ -1,82 +1,38 @@
-import React from 'react';
-import './MyLibrary.css';
+import React from "react";
+import { useBooks } from "../../../../Context/BookContext";
+import "./MyLibrary.css";
 
 function MyLibrary() {
+  const { borrowedBooks } = useBooks();
+
+  // Function to determine progress bar color
+  const getProgressBarColor = (progress) => {
+    if (progress <= 25) return "#FF6347"; // Red for low progress
+    if (progress <= 50) return "#FFA500"; // Orange for medium progress
+    if (progress <= 75) return "#32CD32"; // Lime Green for high progress
+    return "#4CAF50"; // Green for complete progress
+  };
+
   return (
-    <div className="my-library">
-      <h1>My Library</h1>
-      <div className="my-library-books">
-        <div className="book">
-          <img
-            width="200px"
-            src="https://ew.com/thmb/W-tJTEPg1bib_coJZjrN3d_75rg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/9781408855713-c5b0594eaaa2497aac2e003b7fd2fbd4.jpg"
-            alt="Harry Potter Deathly Hallows"
-          />
-          <h2>Harry Potter Deathly Hallows-Part 1</h2>
-          <p>Author</p>
-          <div className="progress"></div>
-        </div>
-        <div className="book">
-          <img
-            width="200px"
-            src="https://ew.com/thmb/W-tJTEPg1bib_coJZjrN3d_75rg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/9781408855713-c5b0594eaaa2497aac2e003b7fd2fbd4.jpg"
-            alt="Harry Potter Deathly Hallows"
-          />
-          <h2>Harry Potter Deathly Hallows-Part 1</h2>
-          <p>Author</p>
-          <div className="progress"></div>
-        </div>
-        <div className="book">
-          <img
-            width="200px"
-            src="https://ew.com/thmb/W-tJTEPg1bib_coJZjrN3d_75rg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/9781408855713-c5b0594eaaa2497aac2e003b7fd2fbd4.jpg"
-            alt="Harry Potter Deathly Hallows"
-          />
-          <h2>Harry Potter Deathly Hallows-Part 1</h2>
-          <p>Author</p>
-          <div className="progress"></div>
-        </div>
-        <div className="book">
-          <img
-            width="200px"
-            src="https://ew.com/thmb/W-tJTEPg1bib_coJZjrN3d_75rg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/9781408855713-c5b0594eaaa2497aac2e003b7fd2fbd4.jpg"
-            alt="Harry Potter Deathly Hallows"
-          />
-          <h2>Harry Potter Deathly Hallows-Part 1</h2>
-          <p>Author</p>
-          <div className="progress"></div>
-        </div>
-        <div className="book">
-          <img
-            width="200px"
-            src="https://ew.com/thmb/W-tJTEPg1bib_coJZjrN3d_75rg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/9781408855713-c5b0594eaaa2497aac2e003b7fd2fbd4.jpg"
-            alt="Harry Potter Deathly Hallows"
-          />
-          <h2>Harry Potter Deathly Hallows-Part 1</h2>
-          <p>Author</p>
-          <div className="progress"></div>
-        </div>
-        <div className="book">
-          <img
-            width="200px"
-            src="https://ew.com/thmb/W-tJTEPg1bib_coJZjrN3d_75rg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/9781408855713-c5b0594eaaa2497aac2e003b7fd2fbd4.jpg"
-            alt="Harry Potter Deathly Hallows"
-          />
-          <h2>Harry Potter Deathly Hallows-Part 1</h2>
-          <p>Author</p>
-          <div className="progress"></div>
-        </div>
-        <div className="book">
-          <img
-            width="200px"
-            src="https://ew.com/thmb/W-tJTEPg1bib_coJZjrN3d_75rg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/9781408855713-c5b0594eaaa2497aac2e003b7fd2fbd4.jpg"
-            alt="Harry Potter Deathly Hallows"
-          />
-          <h2>Harry Potter Deathly Hallows-Part 1</h2>
-          <p>Author</p>
-          <div className="progress"></div>
-        </div>
-        
+    <div className="library-container">
+      <h1 className="library-title">My Library</h1>
+      <div className="book-list">
+        {borrowedBooks.map((book) => (
+          <div key={book.id} className="library-book-item">
+            <img className="library-book-cover" width="200px" src={book.cover} alt={book.title} />
+            <h2 className="library-book-title">{book.title}</h2>
+            <p className="library-book-author">{book.author}</p>
+            <div className="reading-progress">
+              <div
+                className="reading-progress-bar"
+                style={{
+                  width: `${book.progress}%`,
+                  backgroundColor: getProgressBarColor(book.progress),
+                }}
+              ></div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

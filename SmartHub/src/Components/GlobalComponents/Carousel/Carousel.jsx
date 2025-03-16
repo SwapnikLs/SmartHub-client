@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./Carousel.css";
 import CarouselButton from "../CarouselButton/CarouselButton";
 
-function Carousel({ images }) {
+function Carousel({ books }) {
   const carouselRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate(); // Hook for navigation
@@ -67,18 +67,18 @@ function Carousel({ images }) {
 
       {/* Carousel */}
       <div className="carousel" ref={carouselRef}>
-        {images.map((image, index) => (
+        {books.map((book, index) => (
           <div className="carousel-item" key={index}>
             <div className="carousel-card">
               {/* Front Side */}
               <div className="carousel-front">
-                <img src={image.src} alt={image.alt} />
+                <img src={book.src} alt={book.alt} />
               </div>
               {/* Back Side */}
               <div className="carousel-back">
                 <div className="button-container">
                   <CarouselButton text="Add to WishList" />
-                  <CarouselButton text="Quick View" onClick={() => handleQuickView(image)} />
+                  <CarouselButton text="Quick View" onClick={() => handleQuickView(book)} />
                 </div>
               </div>
             </div>

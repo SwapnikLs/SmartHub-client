@@ -1,11 +1,11 @@
-.my-library {
+.library-container {
     font-family: Arial, sans-serif;
     padding: 30px;
     box-sizing: border-box;
     width: 100%;
 }
 
-.my-library h1 {
+.library-title {
     text-align: left;
     color: white;
     font-size: 36px;
@@ -13,7 +13,7 @@
     font-weight: 600;
 }
 
-.my-library-books {
+.book-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
@@ -21,7 +21,7 @@
     margin-top: 20px;
 }
 
-.book {
+.library-book-item {
     background-color: black;
     padding: 15px;
     border-radius: 10px;
@@ -30,14 +30,18 @@
     width: 100%;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
-.book:hover {
+.library-book-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-.book img {
+.library-book-cover {
     border-radius: 8px;
     margin-bottom: 15px;
     width: 100%;
@@ -45,19 +49,19 @@
     height: auto;
 }
 
-.book h2 {
+.library-book-title {
     font-size: 18px;
     color: white;
     margin: 10px 0;
     font-weight: 500;
 }
 
-.book p {
+.library-book-author {
     font-size: 14px;
     color: #777;
 }
 
-.progress {
+.reading-progress {
     width: 100%;
     height: 6px;
     background-color: #eee;
@@ -66,38 +70,36 @@
     position: relative;
 }
 
-.progress::after {
+.reading-progress-bar {
     content: "";
     display: block;
-    width: 70%; /* Adjust this value dynamically based on the progress */
     height: 100%;
-    background-color: #4CAF50;
     border-radius: 3px;
 }
 
 /* Media Query for smaller screens */
 @media (max-width: 768px) {
-    .my-library {
+    .library-container {
         padding: 20px;
     }
     
-    .my-library h1 {
+    .library-title {
         font-size: 28px;
     }
 
-    .my-library-books {
+    .book-list {
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjust grid for smaller screens */
     }
 
-    .book img {
+    .book-cover {
         max-width: 180px; /* Adjust image size for smaller screens */
     }
 
-    .book h2 {
+    .book-title {
         font-size: 16px;
     }
 
-    .book p {
+    .book-author {
         font-size: 12px;
     }
 }

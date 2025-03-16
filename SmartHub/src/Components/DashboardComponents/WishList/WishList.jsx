@@ -1,24 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './WishList.css';
-
-const products = [
-  { id: 1, image: 'https://m.media-amazon.com/images/I/91bYsX41DVL.jpg' },
-  { id: 2, image: 'https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg' },
-  { id: 3, image: 'https://m.media-amazon.com/images/I/71QKQ9mwV7L.jpg' },
-  { id: 4, image: 'https://m.media-amazon.com/images/I/91bYsX41DVL.jpg' },
-  { id: 5, image: 'https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg' },
-  { id: 6, image: 'https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg' },
-  { id: 7, image: 'https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg' },
-  { id: 8, image: 'https://m.media-amazon.com/images/I/91bYsX41DVL.jpg' },
-];
+import {  useBooks } from '../../../Context/BookContext'; // Assuming you have the context
 
 const WishList = () => {
+  const { wishList } = useBooks();; // Fetch wishlist from context
+
   return (
     <div className="favorites-container">
+      <h2 className="wishlist-heading">Wishlist</h2>
       <div className="product-grid">
-        {products.map((product) => (
+        {wishList.map((product) => (
           <div key={product.id} className="product-card">
-            <img src={product.image} alt="Product" className="product-image" />
+            <img src={product.cover} alt={product.title} className="product-image" />
+            <h3 className="product-title">{product.title}</h3>
+            <p className="product-author">By {product.author}</p>
             <button className="borrow-btn">Borrow Now</button>
           </div>
         ))}

@@ -1,19 +1,20 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { 
-  FaBook, FaUsers, FaBookOpen, FaUserShield, FaShapes, FaLifeRing 
+  FaBook, FaUsers, FaBookOpen, FaUserShield, FaShapes, FaLifeRing, FaTimes 
 } from "react-icons/fa";  // Import necessary icons
 import ProfileMenu from "../ProfileMenu/ProfileMenu";
 import "./SideBar.css";
 
 const Sidebar = ({ isSidebarOpen, setIsSidebarOpen }) => {
   return (
-    <div 
-      className={`sidebar ${isSidebarOpen ? "open" : ""}`} 
-      onMouseLeave={() => setIsSidebarOpen(false)}
-    >
+    <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
+      {/* Close Button */}
+      <button className="close-btn" onClick={() => setIsSidebarOpen(false)}>
+        <FaTimes size={25} />
+      </button>
+
       <div className="sidebar-links">
-        {/* Default active Resource Library */}
         <NavLink to="/explore" end className={({ isActive }) => (isActive ? "active" : "")}>
           <FaBook size={30} /> Resource Library
         </NavLink>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './DashboardSideBar.css';
-import BooksStats from './Stats/BooksStats';
+import UserStats from './Stats/UserStats';  // Correct casing
 import SidebarButton from './SideBarButton/SideBarButton';
 import { FaTachometerAlt, FaClock, FaHeart, FaCheck, FaList, FaStar } from 'react-icons/fa';
 
@@ -28,7 +28,7 @@ const Sidebar = ({ handleButtonClick }) => {
       </div>
 
       {/* Book Stats Section */}
-      <BooksStats />
+      <UserStats />
     </div>
   );
 };
