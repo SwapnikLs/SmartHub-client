@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 // Create UserContext
-const UserContext = createContext();
+export const UserContext = createContext();
 
 // Custom hook to use UserContext
 export const useUserContext = () => {

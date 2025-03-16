@@ -14,7 +14,7 @@ function Home() {
         <div className="text-container">
           <h1>Your gateway to a world of knowledge – manage, explore, and cherish every book!</h1>
           <div>
-            <NavLink to="/Explore"> <Button text="Get Started" /> </NavLink>
+            <NavLink to="/explore"> <Button text="Get Started" /> </NavLink>
           </div>
         </div>
         <div className="image-container">
