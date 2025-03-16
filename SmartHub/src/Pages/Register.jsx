@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaTimes, FaCheck } from "react-icons/fa";
@@ -6,7 +6,7 @@ import "../Components/RegisterPageComponents/Register.css";
 import registerlibrary from "../assets/loginlibrary.jpg"
 import ProgressBar from "../Components/GlobalComponents/ProgressBar/ProgressBar";
 const Registration = () => {
-  const [username, setusername] = useState("");
+  const [username, setUsername] = useState("");
 const [isusernameValid, setIsusernameValid] = useState(false);
 //usernameavailability
 const [firstname, setfirstname] = useState("");
@@ -25,8 +25,8 @@ const [confirmpassword, setconfirmpassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isMatch, setisMatch] = useState(false);
-  const [usernameAvailability, setusernameAvailability] = useState(null);
-  const [usernameAvailabilityLoading, setusernameAvailabilityLoading] = useState(false);
+  const [usernameAvailability, setUsernameAvailability] = useState(null);
+  const [usernameAvailabilityLoading, setUsernameAvailabilityLoading] = useState(false);
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -141,72 +141,83 @@ const [confirmpassword, setconfirmpassword] = useState("");
       setIsPhoneValid(/^[0-9]{10}$/.test(phone) ? "valid" : "invalid"); // Shows valid/invalid on blur
     }
   };
-  const checkusernameAvailability = (value) => {
-    if (!value.trim()) return false; // Return false if the value is empty or just spaces
-  
-    // Simulating an API call (Replace this with an actual API request)
-    const takenusernames = ["john123", "admin", "testuser"]; // Example taken usernames
-    return !takenusernames.includes(value.toLowerCase());
-  };
-  
-  const handleusernameChange = (e) => {
-    const value = e.target.value;
-    setusername(value);
+  let debounceTimer = null; // Declaring debounce timer outside to ensure it persists between renders
 
-    if (value.length > 2) {
-      setusernameAvailabilityLoading(true); // Show spinner
+  const checkUsernameAvailability = async (value) => {
+      if (!value.trim()) return false; // Return false if empty input
 
-      setTimeout(() => {
-        setusernameAvailability(checkusernameAvailability(value));
-        setusernameAvailabilityLoading(false); // Hide spinner after 2 sec
-      }, 2000);
-    } else {
-      setusernameAvailability(null);
-    }
+      try {
+          const response = await axios.get(`http://localhost:8080/api/auth/check-username?username=${value}`);
+          return response.data.available; // Assuming API returns { available: true/false }
+      } catch (error) {
+          console.error("Error checking username availability:", error);
+          return false; // Default to false if request fails
+      }
   };
+
+  const handleUsernameChange = (e) => {
+      const value = e.target.value;
+      setUsername(value);
+      setUsernameAvailabilityLoading(true); // Show spinner
+
+      // Clear the previous debounce timer
+      clearTimeout(debounceTimer);
+
+      // Set a new debounce timer for 2 seconds
+      debounceTimer = setTimeout(async () => {
+          const availability = await checkUsernameAvailability(value);
+          setUsernameAvailability(availability); // Set availability once fetched
+          setUsernameAvailabilityLoading(false); // Hide spinner after checking
+      }, 2000); // Delay check by 2 seconds after typing stops
+  };
+
   const [shake, setshake] = useState(false)
   const [startLoading, setStartLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStartLoading(false); // Reset first
     setTimeout(() => setStartLoading(true), 10);
-    if(usernameAvailability && firstname && lastname && !emailError && !(isPhoneValid!="valid") &&passwordStrength.toLowerCase()=="strong"
-    && password==confirmpassword
-  ){
-    console.log("success");
-        try {
-          // 1️⃣ Check if the user already exists
-          const { data } = await axios.get("https://smarthub-server.onrender.com/users");
-    const userExists = data.some((user) => user.email === email && user.username === username);
-    
-          if (userExists) {
-            setError("Account already exists!");
-            return;
-          }
-    
-          // 2️⃣ If not, register the user
-          const userData = { username,firstname, lastname, email, phone, dob, password };
-          await axios.post("https://smarthub-server.onrender.com/users", userData);
-    
-          // 3️⃣ Show success & Redirect to Login
-          setIsSuccessModalOpen(true);
-          setTimeout(() => {
-            setIsSuccessModalOpen(false);
-            navigate("/login");
-          }, 2000);
-        } catch (err) {
-          setError("Error registering. Please try again.");
-    
+  
+    if (
+      usernameAvailability &&
+      firstname &&
+      lastname &&
+      !emailError &&
+      isPhoneValid === "valid" &&
+      passwordStrength.toLowerCase() === "strong" &&
+      password === confirmpassword
+    ) {
+      try {
+        // 1️⃣ Register the user directly (backend handles validation)
+        const userData = { username, firstname, lastname, email, phone, dob, password };
+  
+        await axios.post("http://localhost:8080/api/auth/register", userData);
+  
+        // 2️⃣ Success - Show modal & redirect to login
+        setIsSuccessModalOpen(true);
+        setTimeout(() => {
+          setIsSuccessModalOpen(false);
+          navigate("/login");
+        }, 2000);
+        
+      } catch (err) {
+        if (err.response) {
+          // 🔥 Handle structured backend error response
+          setError(`❌ ${err.response.data.message}`);
+        } else {
+          setError("❌ Registration failed. Please try again later.");
         }
-  }
-  else{
-    console.log("failed");
-    setshake(true);
-  }
-  setTimeout(() => {
-    setshake(false)
-  }, 300);
+      }
+    } else {
+      console.log("Validation failed!");
+      setshake(true);
+    }
+  
+    setTimeout(() => {
+      setshake(false);
+    }, 300);
   };
+  
 const backgroundImageStyle = {
     width: '50%',
     backgroundImage: `url(${registerlibrary})`, // Specify the path to your image
@@ -228,7 +239,7 @@ const backgroundImageStyle = {
   type="text"
   placeholder="User Name"
   value={username}
-  onChange={handleusernameChange}
+  onChange={handleUsernameChange}
   className={`input-field1 ${usernameAvailability == null ? "":(usernameAvailability?"success":"error")}`}
   
   style={{

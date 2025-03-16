@@ -1,0 +1,30 @@
+/* Main container for the dashboard layout */
+.dashboard {
+    display: flex;
+    height: 100vh; /* Ensure full viewport height */
+  }
+  
+  /* Sidebar styles */
+  .dashboard-side-bar {
+    width: 15%; /* 15% width for the sidebar */
+    background-color: #333; /* Background color */
+    outline: 2px solid #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh; /* Full height */
+  }
+  
+  /* Main content area */
+  .dashboard-right {
+    margin-left: 15%; /* Push the content to the right */
+    width: 85%; /* 85% width for the main content */
+    padding: 20px; /* Add some padding for the content */
+  }
+  
+  /* Make sure the components inside dashboard-right take full width */
+  .currently-reading, .my-library {
+    width: 100%; /* Ensure these take up full available width */
+    margin-bottom: 20px; /* Space between the components */
+  }
+  

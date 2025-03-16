@@ -1,0 +1,72 @@
+/* Main Container */
+.completed-books-container {
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #121212;
+    padding: 20px;
+    border-radius: 10px;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+.completed-books-container h2{
+    padding-bottom: 20px;
+}
+/* Book List - Stacked Vertically */
+.completed-book-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Individual Book Card */
+.completed-book-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1E1E1E;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.completed-book-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0px 6px 12px rgba(255, 255, 255, 0.2);
+}
+
+/* Book Cover */
+.completed-book-cover {
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 2px solid #444;
+}
+
+/* Book Details */
+.completed-book-info {
+    flex-grow: 1;
+    margin-left: 15px;
+}
+
+.completed-book-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.completed-book-author {
+    font-size: 14px;
+    color: #bbbbbb;
+}
+
+/* Days Taken Display */
+.completed-book-days {
+    font-size: 14px;
+    font-weight: bold;
+    color: green;
+    background: #222;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+}

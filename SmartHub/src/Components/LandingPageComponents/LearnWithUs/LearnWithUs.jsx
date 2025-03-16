@@ -23,7 +23,7 @@ import image16 from "../../../assets/16.jpg";
 import image17 from "../../../assets/17.jpg";
 
 // Array of images
-const images = [
+const books = [
   { src: image1, alt: "Topic 1" },
   { src: image2, alt: "Topic 2" },
   { src: image3, alt: "Topic 3" },
@@ -64,7 +64,7 @@ const LearnPage = () => {
         <div className="heading-left">
           <h3>Top Picks</h3>
         </div>
-        <TopPickCarousel images={images} />
+        <TopPickCarousel books={books} />
       </div>
     </div>
   );

@@ -1,0 +1,88 @@
+/* Main container for current reading section */
+.current-reading-container {
+    width: 100%;
+    padding: 20px; /* Reduced padding for better fit */
+    box-sizing: border-box; /* Ensures padding does not affect the overall width */
+}
+
+/* Inner container for current reading */
+.inner-current-reading-container {
+    width: 100%;
+    height: 250px; /* Adjusted height for better proportional fit */
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    padding: 20px; /* Added padding for more space around content */
+    position: relative;
+}
+
+/* Left side content (Book title, author, etc.) */
+.left-side {
+    flex: 1;
+    padding-left: 20px;
+    color: white;
+    font-size: 1.5rem; /* Adjusted for better text scaling */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center text */
+}
+
+/* Styling for "Continue Reading" and the arrow */
+.continue-reading {
+    display: flex;
+    align-items: center;
+}
+
+
+.continue-reading p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #D91656; /* A polished orange color */
+    margin-top: 10px;
+    letter-spacing: 1px; /* Slight letter spacing for elegance */
+    text-transform: uppercase; /* Capitalize the text for a clean, modern look */
+    opacity: 0.8; /* Slight transparency for a more refined feel */
+    transition: opacity 0.3s ease; /* Smooth transition for hover effect */
+    margin-right: 10px; /* Spacing between text and arrow */
+}
+
+.continue-reading p:hover {
+    opacity: 1; /* Full opacity when hovered */
+    cursor: pointer;
+    
+}
+
+/* Arrow icon styling */
+.arrow-icon {
+    font-size: 1.5rem;
+    color: #D91656; /* Same color as the text */
+    transition: transform 0.3s ease;
+}
+
+.arrow-icon:hover {
+    transform: translateX(5px); /* Small movement for interactivity */
+}
+
+/* Right side content (Book image) */
+.right-side {
+    position: absolute;
+    right: 10px; /* Adjusted to bring image inside the container */
+    top: 50%;
+    transform: translateY(-50%); /* Vertically centers the image */
+    transition: transform 0.3s ease; /* Smooth transition for the image expansion */
+}
+
+/* Styling the book image */
+.book-image {
+    width: 150px; /* Reduced size for better scaling */
+    height: auto;
+    border-radius: 4px; /* Rounded corners for the image */
+    transition: transform 0.3s ease; /* Smooth transition for scaling */
+}
+
+.book-image:hover {
+    transform: scale(1.2); /* Scale the image up when hovered */
+    cursor: pointer;
+}
