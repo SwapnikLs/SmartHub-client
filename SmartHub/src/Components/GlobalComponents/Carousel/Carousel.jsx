@@ -3,19 +3,17 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "./Carousel.css";
 import CarouselButton from "../CarouselButton/CarouselButton";
 
-function Carousel({ books }) {
+function Carousel({ books,addTowishList }) {
   const carouselRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate(); // Hook for navigation
 
-  // Auto Scroll Effect
   useEffect(() => {
     if (isHovered) return; // Stop scrolling if hovered
-
     const interval = setInterval(() => {
       if (carouselRef.current) {
         if (
-          carouselRef.current.scrollLeft + carouselRef.current.clientWidth >=
+          carouselRef.  current.scrollLeft + carouselRef.current.clientWidth >=
           carouselRef.current.scrollWidth
         ) {
           carouselRef.current.scrollLeft = 0; // Reset to start
@@ -28,22 +26,8 @@ function Carousel({ books }) {
     return () => clearInterval(interval);
   }, [isHovered]);
 
-  // Handle Quick View Click
-  const handleQuickView = (book) => {
-      const queryString = new URLSearchParams({
-        title: book.title,
-        author: book.author,
-        category: book.category,
-        rating: book.rating,
-        total: book.total,
-        available: book.available,
-        description: book.description,
-        src: book.src, 
-        alt: book.alt || "Book Cover"
-      }).toString();
-    
-      navigate(`/bookdetails?${queryString}`);
-    
+  const handleQuickView = (bookId) => {
+      navigate(`/bookdetails?id=${bookId}`);
   };
 
   return (
@@ -77,8 +61,8 @@ function Carousel({ books }) {
               {/* Back Side */}
               <div className="carousel-back">
                 <div className="button-container">
-                  <CarouselButton text="Add to WishList" />
-                  <CarouselButton text="Quick View" onClick={() => handleQuickView(book)} />
+                  <CarouselButton text="Add to WishList" onClick={()=>addTowishList(book.id)} />
+                  <CarouselButton text="Quick View" onClick={() => handleQuickView(book.id)} />
                 </div>
               </div>
             </div>

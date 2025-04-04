@@ -10,7 +10,7 @@ const MainHeader = () => {
   const location = useLocation();
 
   // ✅ Define where Sidebar & SearchBar should appear
-  const showSidebar = ["/explore", "/explore/genres", "/explore/support","/explore/community","/explore/request-book"].includes(location.pathname);
+  const showSidebar = ["/explore", "/explore/genres", "/explore/support","/explore/community","/explore/request-book","/results"].includes(location.pathname);
   const showSearchBar = !["/explore/support", "/explore/request-a-book", "/explore/community"].includes(location.pathname);
 
   return (

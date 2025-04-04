@@ -1,9 +1,10 @@
 import React from 'react';
 import { useBooks } from '../../../Context/BookContext';  // Adjust the import path if needed
 import './CompletedBooks.css';
+import { useUserDashboard } from '../../../Context/UserDashboardContext';
 
 const CompletedBooks = () => {
-  const { completed } = useBooks();  // Fetch completed books from the useBooks context
+  const { completed } = useUserDashboard();  // Fetch completed books from the useBooks context
 
   return (
     <div className="completed-books-container">

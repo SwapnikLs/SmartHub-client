@@ -1,206 +1,14 @@
-import { createContext, useContext, useState } from "react";
+import axios from "axios";
+import { createContext, useContext, useEffect,useState } from "react";
+import { fetchSectionBooks } from "../Service/SectionFetchAPI";
 
 export const BookContext = createContext();
 
 export const BookProvider = ({ children }) => {
-  // Hardcoded books for different sections
-  const [trendingBooks, setTrendingBooks] = useState([
-    {
-      id: 1,
-      src: "https://images.penguinrandomhouse.com/cover/9780593599730",
-      title: "Snow Crash",
-      author: "Neal Stephenson",
-      rating: 4.5,
-      description: "A futuristic world of hackers and virtual reality."
-    },
-    {
-      id: 2,
-      src: "https://images.penguinrandomhouse.com/cover/9781496712387",
-      title: "The Secret, Book & Scone Society",
-      author: "Ellery Adams",
-      rating: 4.2,
-      description: "A book club that solves mysteries."
-    },
-    {
-      id: 3,
-      src: "https://images.penguinrandomhouse.com/cover/9781501171345",
-      title: "The Night Watchman",
-      author: "Louise Erdrich",
-      rating: 4.7,
-      description: "A novel inspired by true events of Native American history."
-    },
-    {
-      id: 4,
-      src: "https://images.penguinrandomhouse.com/cover/9780735211292",
-      title: "Atomic Habits",
-      author: "James Clear",
-      rating: 4.9,
-      description: "A practical guide to building better habits."
-    },
-    {
-      id: 5,
-      src: "https://images.penguinrandomhouse.com/cover/9780593189641",
-      title: "A Man Called Ove",
-      author: "Fredrik Backman",
-      rating: 4.6,
-      description: "A heartwarming story of an old curmudgeon and his unlikely friendships."
-    },
-    {
-      id: 6,
-      src: "https://images.penguinrandomhouse.com/cover/9780385545969",
-      title: "The Midnight Library",
-      author: "Matt Haig",
-      rating: 4.8,
-      description: "A library of infinite possibilities and second chances."
-    },
-    {
-      id: 7,
-      src: "https://images.penguinrandomhouse.com/cover/9780307595633",
-      title: "Where the Crawdads Sing",
-      author: "Delia Owens",
-      rating: 4.7,
-      description: "A gripping murder mystery in the marshlands."
-    },
-    {
-      id: 8,
-      src: "https://images.penguinrandomhouse.com/cover/9781984822185",
-      title: "The Book Thief",
-      author: "Markus Zusak",
-      rating: 4.8,
-      description: "A heart-wrenching WWII story narrated by Death."
-    },
-    {
-      id: 9,
-      src: "https://images.penguinrandomhouse.com/cover/9780451490049",
-      title: "The Silent Patient",
-      author: "Alex Michaelides",
-      rating: 4.5,
-      description: "A psychological thriller with a shocking twist."
-    },
-    {
-      id: 10,
-      src: "https://images.penguinrandomhouse.com/cover/9781982142672",
-      title: "It Ends With Us",
-      author: "Colleen Hoover",
-      rating: 4.6,
-      description: "A heartbreaking romance about love and choices."
-    },
-    {
-      id: 11,
-      src: "https://images.penguinrandomhouse.com/cover/9781101982197",
-      title: "The 5 AM Club",
-      author: "Robin Sharma",
-      rating: 4.4,
-      description: "How waking up early can transform your life."
-    },
-    {
-      id: 12,
-      src: "https://images.penguinrandomhouse.com/cover/9780385547345",
-      title: "Project Hail Mary",
-      author: "Andy Weir",
-      rating: 4.9,
-      description: "A thrilling space adventure from the author of The Martian."
-    },
-    {
-      id: 13,
-      src: "https://images.penguinrandomhouse.com/cover/9780062316097",
-      title: "The Alchemist",
-      author: "Paulo Coelho",
-      rating: 4.8,
-      description: "A fable about following your dreams."
-    },
-    {
-      id: 14,
-      src: "https://images.penguinrandomhouse.com/cover/9781400032716",
-      title: "A Thousand Splendid Suns",
-      author: "Khaled Hosseini",
-      rating: 4.9,
-      description: "A powerful tale of two Afghan women."
-    },
-    {
-      id: 15,
-      src: "https://images.penguinrandomhouse.com/cover/9780345807045",
-      title: "The Handmaid’s Tale",
-      author: "Margaret Atwood",
-      rating: 4.5,
-      description: "A chilling dystopian novel."
-    },
-    {
-      id: 16,
-      src: "https://images.penguinrandomhouse.com/cover/9780143136319",
-      title: "Dune",
-      author: "Frank Herbert",
-      rating: 4.6,
-      description: "A sci-fi epic set in a desert world."
-    },
-    {
-      id: 17,
-      src: "https://images.penguinrandomhouse.com/cover/9780679411676",
-      title: "1984",
-      author: "George Orwell",
-      rating: 4.8,
-      description: "A dystopian classic about surveillance and control."
-    },
-    {
-      id: 18,
-      src: "https://images.penguinrandomhouse.com/cover/9780590353427",
-      title: "Harry Potter and the Sorcerer’s Stone",
-      author: "J.K. Rowling",
-      rating: 4.9,
-      description: "The first book in the beloved fantasy series."
-    },
-    {
-      id: 19,
-      src: "https://images.penguinrandomhouse.com/cover/9780062457738",
-      title: "The Subtle Art of Not Giving a F*ck",
-      author: "Mark Manson",
-      rating: 4.6,
-      description: "A self-help book with a refreshing approach."
-    },
-    {
-      id: 20,
-      src: "https://images.penguinrandomhouse.com/cover/9780062652560",
-      title: "Rich Dad Poor Dad",
-      author: "Robert Kiyosaki",
-      rating: 4.7,
-      description: "Lessons on money and financial freedom."
-    },
-    {
-      id: 21,
-      src: "https://images.penguinrandomhouse.com/cover/9780735219090",
-      title: "Dare to Lead",
-      author: "Brené Brown",
-      rating: 4.6,
-      description: "A leadership book focused on vulnerability."
-    },
-    {
-      id: 22,
-      src: "https://images.penguinrandomhouse.com/cover/9780553382563",
-      title: "The Road",
-      author: "Cormac McCarthy",
-      rating: 4.5,
-      description: "A post-apocalyptic survival story."
-    },
-    {
-      id: 23,
-      src: "https://images.penguinrandomhouse.com/cover/9780671023379",
-      title: "To Kill a Mockingbird",
-      author: "Harper Lee",
-      rating: 4.9,
-      description: "A classic novel on racial injustice."
-    },
-    {
-      id: 24,
-      src: "https://images.penguinrandomhouse.com/cover/9781449474256",
-      title: "Milk and Honey",
-      author: "Rupi Kaur",
-      rating: 4.5,
-      description: "A collection of poetry on love and healing."
-    }
-    // Add 16 more books here...
-  ]
-  );
-
+  const [trendingBooks, setTrendingBooks] = useState([]);
+  useEffect(() => {
+    fetchSectionBooks("Trending").then(setTrendingBooks);
+}, []);
   const [topPicks, setTopPicks] = useState([
     {
       id: 25,
@@ -1652,7 +1460,7 @@ export const BookProvider = ({ children }) => {
   };
 
   return (
-    <BookContext.Provider value={{userStats,currentBook,completed,wishList,genres, trendingBooks, topPicks, smartPicks, newArrivals, youMayLike, continueReading, borrowedBooks, borrowBook, returnBook }}>
+    <BookContext.Provider value={{userStats,currentBook,completed,wishList,genres, trendingBooks, topPicks, smartPicks, newArrivals, youMayLike,setContinueReading,setYouMayLike,setNewArrivals,setSmartPicks,setTopPicks,setTrendingBooks, continueReading, borrowedBooks, borrowBook, returnBook }}>
       {children}
     </BookContext.Provider>
   );

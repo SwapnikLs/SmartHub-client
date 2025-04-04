@@ -14,51 +14,69 @@ export const useUserContext = () => {
 
 // UserProvider component to wrap the app and provide context
 export const UserProvider = ({ children }) => {
-  // Load user details from localStorage
-  const storedUser = JSON.parse(localStorage.getItem("user")) || {};
-
-  // State to store user details (updated)
+  // Load user details and token from localStorage
+  let storedUser = {};
+  try {
+    storedUser = JSON.parse(localStorage.getItem("user")) || {};
+  } catch (error) {
+    console.error("Error parsing user data from localStorage:", error);
+  }
+  const storedToken = localStorage.getItem("authToken") || null;
+  // State to store user details and authentication state
   const [username, setUsername] = useState(storedUser.username || "");
   const [firstName, setFirstName] = useState(storedUser.firstName || "");
   const [lastName, setLastName] = useState(storedUser.lastName || "");
   const [password, setPassword] = useState(storedUser.password || "");
   const [confirmPassword, setConfirmPassword] = useState(storedUser.confirmPassword || "");
-  const [phone, setPhone] = useState(storedUser.phone || "");
+  const [number, setNumber] = useState(storedUser.number || "");
   const [email, setEmail] = useState(storedUser.email || "");
   const [dob, setDob] = useState(storedUser.dob || "");
-  const [isAuthenticated, setIsAuthenticated] = useState(!!storedUser.username); // If user exists, set auth to true
+  const [isAuthenticated, setIsAuthenticated] = useState(!!storedToken);
+  const [authToken, setAuthToken] = useState(storedToken); 
 
-  // Function to set user details (login)
   const setUserDetails = (userData) => {
-    setUsername(userData.username);
-    setFirstName(userData.firstName);
-    setLastName(userData.lastName);
-    setPassword(userData.password);
-    setConfirmPassword(userData.confirmPassword);
-    setPhone(userData.phone);
-    setEmail(userData.email);
-    setDob(userData.dob);
+    if (userData.username) setUsername(userData.username);
+    if (userData.firstName) setFirstName(userData.firstName);
+    if (userData.lastName) setLastName(userData.lastName);
+    if (userData.password) setPassword(userData.password);
+    if (userData.confirmPassword) setConfirmPassword(userData.confirmPassword);
+    if (userData.number) setNumber(userData.number);
+    if (userData.email) setEmail(userData.email);
+    if (userData.dob) setDob(userData.dob);
+    if (userData.token) setAuthToken(userData.token);
+  
     setIsAuthenticated(true);
-
-    // Save to localStorage
+  
+    // Save user details and token to localStorage
     localStorage.setItem("user", JSON.stringify(userData));
+    if (userData.token) localStorage.setItem("authToken", userData.token);
   };
- 
-  // Function to clear user details (logout)
+  const setAuthTrue = (token = authToken) => {
+    if (token) {
+      setIsAuthenticated(true);
+      localStorage.setItem("authToken", token); // Save the provided token
+    } else {
+      console.warn("No token provided to setAuthTrue.");
+    }
+  };
   const clearUserDetails = () => {
     setUsername("");
     setFirstName("");
     setLastName("");
     setPassword("");
     setConfirmPassword("");
-    setPhone("");
+    setNumber("");
     setEmail("");
     setDob("");
     setIsAuthenticated(false);
-
-    // Remove from localStorage
+    setAuthToken(null);
+  
+    // Clear all user-related data from localStorage
     localStorage.removeItem("user");
+    localStorage.removeItem("authToken");
   };
+  
+  const getToken = () => authToken;
 
   return (
     <UserContext.Provider
@@ -68,12 +86,15 @@ export const UserProvider = ({ children }) => {
         lastName,
         password,
         confirmPassword,
-        phone,
+        number,
         dob,
         email,
         isAuthenticated, // Expose isAuthenticated
+        authToken, // Expose token
         setUserDetails,
         clearUserDetails,
+        getToken, // Expose getToken function
+        setAuthTrue
       }}
     >
       {children}

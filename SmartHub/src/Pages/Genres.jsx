@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../Components/GenresPageComponents/Genres.css";
 import { useBooks } from "../Context/BookContext";
-
+import "../Components/GenresPageComponents/Genres.css"
 const settings = {
   dots: false,
   infinite: true,

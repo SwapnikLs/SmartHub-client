@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CurrentlyReading from '../Components/DashboardComponents/Status/CurrentlyReading/CurrentlyReading';
 import MyLibrary from '../Components/DashboardComponents/Status/MyLibrary/MyLibrary';
@@ -8,58 +8,42 @@ import OverdueTable from '../Components/DashboardComponents/OverDues/OverDues';
 import WishList from '../Components/DashboardComponents/WishList/WishList';
 import CompletedBooks from '../Components/DashboardComponents/CompletedBooks/CompletedBooks';
 import Button from "../Components/GlobalComponents/Button/Button";
+import { useUserDashboard } from '../Context/UserDashboardContext';
+import { getDashboardBooks } from '../Service/getDashboardBooks';
 
 function Dashboard() {
   const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState('Status');
+  const [activeSection, setActiveSection] = useState(() => {
+    // Retrieve the saved section from localStorage or default to 'Status'
+    return localStorage.getItem('activeSection') || 'Status';
+  });
+  const { dashboardBooks, setDashboardBooks } = useUserDashboard();
 
-  const books = [
-    {
-      id: 1,
-      name: "Atomic Habits",
-      image: "https://m.media-amazon.com/images/I/91bYsX41DVL.jpg",
-      borrowDate: "2024-02-15",
-      dueDate: "2024-03-01",
-      status: "OVERDUE"
-    },
-    {
-      id: 2,
-      name: "The Alchemist",
-      image: "https://m.media-amazon.com/images/I/71aFt4+OTOL.jpg",
-      borrowDate: "2024-02-25",
-      dueDate: "2024-03-10",
-      status: "PENDING"
-    },
-    {
-      id: 3,
-      name: "The Subtle Art of Not Giving a F*ck",
-      image: "https://m.media-amazon.com/images/I/71QKQ9mwV7L.jpg",
-      borrowDate: "2025-02-20",
-      dueDate: "2025-03-10",
-      status: "PAID"
-    },
-    {
-      id: 4,
-      name: "The Power of Habit",
-      image: "https://m.media-amazon.com/images/I/91Fg03BiaNL.jpg",
-      borrowDate: "2025-03-01",
-      dueDate: "2025-03-20",
-      status: "PENDING"
-    },
-    {
-      id: 5,
-      name: "Deep Work",
-      image: "https://m.media-amazon.com/images/I/81RlA9wqz3L.jpg",
-      borrowDate: "2025-03-05",
-      dueDate: "2025-03-25",
-      status: "SCHEDULED"
-    }
-  ];
+  
+  useEffect(() => {
+    // Save the active section to localStorage whenever it changes
+    localStorage.setItem('activeSection', activeSection);
+  }, [activeSection]);
+  
+  useEffect(() => {
+    const fetchAndSetDashboardBooks = async () => {
+      try {
+        const books = await getDashboardBooks();
+        setDashboardBooks(books);
+      } catch (error) {
+        console.error("❌ Error fetching dashboard books:", error);
+      }
+    };
+  
+    fetchAndSetDashboardBooks();
+    console.log(dashboardBooks);
+  }, [setDashboardBooks]);  // Ensure re-fetching when the setter function is available
+  
 
   return (
     <div className="dashboard-container">
       {/* Back Button at the Top Left */}
-      <div className="back-button-container"  onClick={() => navigate(-1)}>
+      <div className="back-button-container" onClick={() => navigate(-1)}>
         <Button text="⬅" />
       </div>
 
@@ -68,7 +52,7 @@ function Dashboard() {
       <div className='dashboard-right'>
         {activeSection === 'Status' && (
           <>
-            <CurrentlyReading />
+            <CurrentlyReading dashboardBooks={dashboardBooks} />
             <MyLibrary />
           </>
         )}

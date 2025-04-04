@@ -1,13 +1,13 @@
 import React from "react";
-import "./DeleteConfirmationModal.css"; // You can style it as needed
+import "./DeleteConfirmation.css"; // You can style it as needed
 
-const ConfirmationModal = ({ show, onConfirm, onCancel }) => {
+const Confirmation = ({ show, onConfirm, onCancel }) => {
     if (!show) return null;
   return (
-    <div className="confirmation-modal-overlay">
-      <div className="confirmation-modal">
+    <div className="confirmation--overlay">
+      <div className="confirmation-">
         <h3>Are you sure want to remove the account?</h3>
-        <div className="modal-buttons">
+        <div className="-buttons">
           <button onClick={onConfirm}>Confirm</button>
           <button onClick={onCancel}>Cancel</button>
         </div>
@@ -16,4 +16,4 @@ const ConfirmationModal = ({ show, onConfirm, onCancel }) => {
   );
 };
 
-export default ConfirmationModal;
+export default Confirmation;

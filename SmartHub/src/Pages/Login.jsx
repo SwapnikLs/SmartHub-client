@@ -5,6 +5,8 @@ import { useUserContext } from "../Context/UserContext";
 import "../Components/LoginPageComponents/Login.css";
 import loginlibrary from "../assets/loginlibrary.jpg";
 import ProgressBar from "../Components/GlobalComponents/ProgressBar/ProgressBar";
+import { loginUser } from "../Service/Api";
+import PdfViewer from "./PdfViewer";
 
 const Login = () => {
   const [username, setusername] = useState("");
@@ -14,73 +16,42 @@ const Login = () => {
   const [shake, setShake] = useState(false);
 
   const navigate = useNavigate();
-  const { setUserDetails, isAuthenticated } = useUserContext();
+  const { setUserDetails, setAuthTrue,isAuthenticated } = useUserContext();
 
-  // ✅ Move navigation logic inside useEffect to avoid rendering errors
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/explore");
     }
   }, [isAuthenticated, navigate]);
 
-const API_URL = "http://localhost:8080";
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setMessage("");
+    setLoading(true);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setMessage("");
-  setLoading(true);
+    if (!username || !password) {
+      setMessage("⚠️ Please enter both username and password.");
+      triggerShake();
+      setLoading(false);
+      return;
+    }
 
-  if (!username || !password) {
-    setMessage("⚠️ Please enter both username and password.");
-    triggerShake();
-    setLoading(false);
-    return;
-  }
+    const result = await loginUser(username, password);
 
-  try {
-    // ✅ Send login request
-    const response = await axios.post(`${API_URL}/api/auth/login`, {
-      username,
-      password,
-    });
-
-    // ✅ Ensure response is structured correctly
-    if (response.data.success) {
-      const user = response.data.user;
-
-      setUserDetails({
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        phone: user.phone,
-        dob: user.dob, // If needed, format this using moment.js
-        email: user.email,
-      });
-
+    if (result.success) {
+      setUserDetails(result.userDetails);
       setMessage("✅ Login successful!");
+      console.log("✅ Login successful!");
+      navigate("/explore"); // Redirect to explore page
     } else {
-      setMessage("⚠️ Login failed. Please check your credentials.");
+      setMessage(result.message);
       triggerShake();
     }
-  } catch (error) {
-    if (error.response) {
-      const errorData = error.response.data;
-      console.log(username);
-      console.log(password);
-      
-      setMessage(`⚠️ ${errorData.message || "Login failed. Please try again."}`);
-    } else {
-      setMessage("❌ Unable to connect to the server.");
-    }
-    triggerShake();
-  } finally {
-    setLoading(false);
-  }
-};
 
-  
-  
-  // 🔄 Function to trigger shake effect
+    setLoading(false);
+  };
+
+
   const triggerShake = () => {
     setShake(true);
     setTimeout(() => setShake(false), 500);
@@ -93,7 +64,7 @@ const handleSubmit = async (e) => {
         <div className="login-left">
           <div className="login-form">
             <h2>Login to Your Account</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleLogin}>
               <input
                 type="text"
                 placeholder="username"

@@ -1,21 +1,20 @@
 import React from "react";
-import Button from "../../GlobalComponents/Button/Button"; // Assuming Button is a reusable component
-import "./Modal.css"
-const Modal = ({ show, onConfirm, onCancel }) => {
-  if (!show) return null; // If modal is not visible, return null
+import "./Modal.css";
+
+const Modal = ({ show, message, onConfirm, onCancel }) => {
+  if (!show) return null;
 
   return (
     <div className="modal-overlay">
       <div className="modal">
-        <h3>Are you sure you want to save the changes?</h3>
-        <div className="modal-buttons">
-          <div onClick={onConfirm}>
-          <Button text="Confirm" />
+        {message ? (
+          <h3 className="modal-title">{message}</h3> // Show only message
+        ) : (
+          <div className="modal-buttons">
+            <button className="modal-btn confirm" onClick={onConfirm}>Confirm</button>
+            <button className="modal-btn cancel" onClick={onCancel}>Cancel</button>
           </div>
-          <div onClick={onCancel}>
-          <Button text="Cancel"  />
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );

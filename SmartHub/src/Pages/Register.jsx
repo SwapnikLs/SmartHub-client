@@ -5,17 +5,17 @@ import { FaTimes, FaCheck } from "react-icons/fa";
 import "../Components/RegisterPageComponents/Register.css";
 import registerlibrary from "../assets/loginlibrary.jpg"
 import ProgressBar from "../Components/GlobalComponents/ProgressBar/ProgressBar";
+import { checkUsernameAvailability, registerUser } from "../Service/Api";
 const Registration = () => {
   const [username, setUsername] = useState("");
 const [isusernameValid, setIsusernameValid] = useState(false);
-//usernameavailability
 const [firstname, setfirstname] = useState("");
 const [lastname, setlastname] = useState("");
 
 const [email, setEmail] = useState("");
 
-const [phone, setPhone] = useState("");
-const [isPhoneValid,setIsPhoneValid] = useState(null);
+const [number, setnumber] = useState("");
+const [isnumberValid,setIsnumberValid] = useState(null);
 const [dob, setDob] = useState("");
 
 const [password, setPassword] = useState("");
@@ -36,10 +36,9 @@ const [confirmpassword, setconfirmpassword] = useState("");
     const value = e.target.value;
     setEmail(value);
   
-    // While typing, show "Perfect" if valid
     if (/^\S+@\S+\.\S+$/.test(value)) {
       setEmailSuccess("Perfect");
-      setEmailError(""); // Clear any previous error
+      setEmailError(""); 
     }
     else{
       setEmailSuccess("");
@@ -53,7 +52,7 @@ const [confirmpassword, setconfirmpassword] = useState("");
       setEmailError("");
     } else if (!/^\S+@\S+\.\S+$/.test(email)) {
       setEmailError("❌ Oops! That doesn’t look like a valid email.");
-      setEmailSuccess(""); // Clear success message
+      setEmailSuccess(""); 
     } else {
       setEmailSuccess("✅ Looks good! Your email format is correct.");
       setEmailError("");
@@ -129,68 +128,54 @@ const [confirmpassword, setconfirmpassword] = useState("");
   };
   
 
-  const changePhone = (e) => {
+  const changenumber = (e) => {
     const value = e.target.value;
-    setPhone(value);
+    setnumber(value);
   
     if (value === "") {
-      setIsPhoneValid(null);
+      setIsnumberValid(null);
     } else if (/^[0-9]{10}$/.test(value)) {
-      setIsPhoneValid("perfect");
+      setIsnumberValid("perfect");
     } else {
-      setIsPhoneValid(null);
+      setIsnumberValid(null);
     }
   };
   
-  const validatePhone = () => {
-    if (!phone.trim()) {
-      setIsPhoneValid(null);
+  const validatenumber = () => {
+    if (!number.trim()) {
+      setIsnumberValid(null);
       return;
     }
-    setIsPhoneValid(/^[0-9]{10}$/.test(phone) ? "valid" : "invalid");
+    setIsnumberValid(/^[0-9]{10}$/.test(number) ? "valid" : "invalid");
   };
   
-
-  const checkUsernameAvailability = async (value) => {
-    if (!value.trim()) return false;
-
-    try {
-        const response = await axios.get(`http://localhost:8080/api/auth/check-username?username=${value}`);
-        return response.data.available;
-    } catch (error) {
-        console.error("Error checking username availability:", error);
-        setUsernameAvailability(null); // Set to null instead of false
-        return null; // Indicate API failure
-    }
-};
-
 
   const debounceTimer = useRef(null);
 
+  
   const handleUsernameChange = (e) => {
     const value = e.target.value;
     setUsername(value);
     setUsernameAvailabilityLoading(true);
-  
+
     // Clear previous debounce timer
-    if (debounceTimer.current) {
-        clearTimeout(debounceTimer.current);
-    }
-  
+    clearTimeout(debounceTimer.current);
+
     if (value.length < 6) {
       setshake(true);
       setTimeout(() => setshake(false), 500);
-        setUsernameAvailability(false);
-        setUsernameAvailabilityLoading(false);
-        return;
+      setUsernameAvailability(false);
+      setUsernameAvailabilityLoading(false);
+      return;
     }
-    clearTimeout(debounceTimer.current);
+
     // Set a new debounce timer
+    
     debounceTimer.current = setTimeout(async () => {
-        const availability = await checkUsernameAvailability(value);
-        setUsernameAvailability(availability);
-        setUsernameAvailabilityLoading(false);
-    }, 2000);
+      const availability = await checkUsernameAvailability(value);
+      setUsernameAvailability(availability);
+      setUsernameAvailabilityLoading(false);
+    }, 1000); // Reduced delay to 1s for better UX
   };
   
   const [shake, setshake] = useState(false)
@@ -198,47 +183,37 @@ const [confirmpassword, setconfirmpassword] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStartLoading(false);
-    
     if (
-      
       firstname &&
       lastname &&
       !emailError &&
-      isPhoneValid === "valid" &&
+      isnumberValid === "valid" &&
       passwordStrength.toLowerCase() === "strong" &&
       password === confirmpassword
     ) {
       try {
-        // 1️⃣ Register the user directly (backend handles validation)
-        const userData = { username, firstname, lastname, email, phone, dob, password };
-        
-        await axios.post("http://localhost:8080/api/auth/register", userData);
-        
+        const userData = { username,firstname, lastname, email, number, dob, password };
+
+        await registerUser(userData); // Call API function
         setTimeout(() => setStartLoading(true), 10);
         setIsSuccessModalOpen(true);
         setTimeout(() => {
           setIsSuccessModalOpen(false);
           navigate("/login");
         }, 2000);
-        
       } catch (err) {
-        if (err.response) {
-          // 🔥 Handle structured backend error response
-          setError(`❌ ${err.response.data.message}`);
-        } else {
-          setError("❌ Registration failed. Please try again later.");
-        }
+        setError(`❌ ${err}`);
       }
     } else {
-      setError("❌ Please fill all the fields correctly before submitting");
+      setError("❌ Please fill all fields correctly before submitting");
       setshake(true);
-  }
-  
+    }
+
     setTimeout(() => {
       setshake(false);
     }, 300);
   };
-  
+
 const backgroundImageStyle = {
     width: '50%',
     backgroundImage: `url(${registerlibrary})`, // Specify the path to your image
@@ -304,16 +279,16 @@ const backgroundImageStyle = {
       <div>
   <input
     type="tel"
-    placeholder="Phone"
-    value={phone}
-    onChange={changePhone}
-    onBlur={validatePhone}
+    placeholder="number"
+    value={number}
+    onChange={changenumber}
+    onBlur={validatenumber}
     className={`input-field1`}
     style={{
       borderColor:
-      isPhoneValid === null
+      isnumberValid === null
       ? ""
-      : isPhoneValid === "valid" || isPhoneValid === "perfect"
+      : isnumberValid === "valid" || isnumberValid === "perfect"
       ? "green"
       : "red",
     }}
@@ -321,18 +296,18 @@ const backgroundImageStyle = {
     />
   
   <div
-    className={`fade-in1 ${isPhoneValid ? "show" : ""} ${isPhoneValid !== "valid" && isPhoneValid !== "perfect" && shake?"shake":""}`} // Add 'show' class when valid
+    className={`fade-in1 ${isnumberValid ? "show" : ""} ${isnumberValid !== "valid" && isnumberValid !== "perfect" && shake?"shake":""}`} // Add 'show' class when valid
     style={{
       color:
-      isPhoneValid === "valid" || isPhoneValid === "perfect" ? "green" : "red",
+      isnumberValid === "valid" || isnumberValid === "perfect" ? "green" : "red",
     }}
     >
-    {isPhoneValid === "perfect"
+    {isnumberValid === "perfect"
       ? "✔ Perfect"
-      : isPhoneValid === "valid"
-      ? "✔ Valid phone number"
-      : isPhoneValid === "invalid"
-      ? "✖ Invalid phone number"
+      : isnumberValid === "valid"
+      ? "✔ Valid number number"
+      : isnumberValid === "invalid"
+      ? "✖ Invalid number number"
       : ""}
   </div>
 </div>

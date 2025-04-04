@@ -34,6 +34,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    cursor: pointer;
 }
 
 .library-book-item:hover {
@@ -77,6 +78,36 @@
     border-radius: 3px;
 }
 
+.no-books-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .no-books-message {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .browse-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .browse-button:hover {
+    background-color: #0056b3;
+  }
+  
 /* Media Query for smaller screens */
 @media (max-width: 768px) {
     .library-container {

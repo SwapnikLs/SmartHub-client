@@ -66,10 +66,28 @@
     transition: background-color 0.3s;
     font-weight: bold;
     width: 100%;
+    margin-bottom: 10px;
 }
 
 .borrow-btn:hover {
     background-color: #d63333;
+}
+
+.remove-btn {
+    background-color: #f44336; /* Red */
+    color: white;
+    border: none;
+    padding: 10px 15px; /* Match borrow-btn */
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    width: 100%; /* Match borrow-btn */
+}
+
+.remove-btn:hover {
+    background-color: #d32f2f; /* Match hover effect */
 }
 
 @media (max-width: 768px) {

@@ -3,14 +3,16 @@ import Button from "../../GlobalComponents/Button/Button";
 import Modal from "../Modal/Modal";
 import { useUserContext } from "../../../Context/UserContext"; // Import the context
 import "./UserSettings.css";
+import axios from "axios";
 
 const UserSettings = () => {
   const { 
     username, 
     firstName, 
     lastName, 
-    phone, 
+    number, 
     dob, 
+    email,
     setUserDetails 
   } = useUserContext(); // Get user details from context
 
@@ -18,9 +20,10 @@ const UserSettings = () => {
   const [newUsername, setNewUsername] = useState(username);
   const [newFirstName, setNewFirstName] = useState(firstName);
   const [newLastName, setNewLastName] = useState(lastName);
-  const [newPhone, setNewPhone] = useState(phone);
+  const [newnumber, setNewnumber] = useState(number);
   const [newDob, setNewDob] = useState(dob);
   const [newPassword, setNewPassword] = useState("");
+  const [newEmail, setNewEmail] = useState(email);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showModal, setShowModal] = useState(false);
 
@@ -29,35 +32,51 @@ const UserSettings = () => {
     setNewUsername(username);
     setNewFirstName(firstName);
     setNewLastName(lastName);
-    setNewPhone(phone);
+    setNewnumber(number);
     setNewDob(dob);
-  }, [username, firstName, lastName, phone, dob]);
+    setNewEmail(email)
+  }, [username, firstName, lastName, number,email, dob]);
 
   // Function to handle save changes
   const handleSaveChanges = () => {
     setShowModal(true); // Show confirmation modal
   };
 
-  // Function to confirm changes and update context
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (newPassword && newPassword !== confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-
+  
+    // Use default values from context if fields are empty
     const updatedUserData = {
-      username: newUsername,
-      firstName: newFirstName,
-      lastName: newLastName,
-      phone: newPhone,
-      dob: newDob,
-      ...(newPassword && { password: newPassword }), // Only include password if changed
+      username: newUsername.trim() || username, // Use default username if empty
+      firstName: newFirstName.trim() || firstName, // Use default first name if empty
+      lastName: newLastName.trim() || lastName, // Use default last name if empty
+      number: newnumber.trim() || number, // Use default number if empty
+      dob: newDob || dob, // Use default date of birth if empty
+      email: newEmail.trim() || email, // Use default email if empty
+      ...(newPassword ? { password: newPassword } : {}), // Include password only if updated
     };
-
-    setUserDetails(updatedUserData); // Update context
-    setShowModal(false); // Close modal
+  
+    try {
+      // 🔥 Call the backend API to update user details
+      const response = await axios.put(
+        `http://localhost:8080/api/auth/update?username=${username}`,
+        updatedUserData
+      );
+  
+      // ✅ If successful, update frontend state
+        if (response.status === 200) {
+          setUserDetails(response.data); // Update context with latest user data
+          alert("Profile updated successfully!");
+          setShowModal(false); // Close modal
+        }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Failed to update profile. Please try again.");
+    }
   };
-
   // Function to cancel changes (close modal)
   const handleCancel = () => {
     setShowModal(false);
@@ -97,13 +116,13 @@ const UserSettings = () => {
         />
       </div>
 
-      {/* Phone Number */}
+      {/* number Number */}
       <div className="setting-row">
-        <label>Change Phone Number</label>
+        <label>Change  Number</label>
         <input
           type="text"
-          value={newPhone}
-          onChange={(e) => setNewPhone(e.target.value)}
+          value={newnumber}
+          onChange={(e) => setNewnumber(e.target.value)}
         />
       </div>
 
@@ -116,6 +135,15 @@ const UserSettings = () => {
           onChange={(e) => setNewDob(e.target.value)}
         />
       </div>
+      <div className="setting-row">
+        <label>Change Date of Birth</label>
+        <input
+          type="email"
+          value={newEmail}
+          onChange={(e) => setNewEmail(e.target.value)}
+        />
+      </div>
+
 
       {/* Password */}
       <div className="setting-row">

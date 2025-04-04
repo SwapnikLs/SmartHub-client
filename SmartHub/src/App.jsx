@@ -14,7 +14,8 @@ import AdminPanel from './Pages/AdminPanel';
 import Support from './Pages/Support';
 import BookDetails from './Pages/BookDetails';
 import Dashboard from './Pages/Dashboard';
-import PdfViewer from './Components/GlobalComponents/PDFViewer/PDFViewer';
+import SearchResultsPage from './Pages/SearchResultsPage';
+import PdfViewer from './Pages/PdfViewer';
 import Providers from './Context/Providers';
 import { useUserContext } from './Context/UserContext';
 const PrivateRoute = ({ element }) => {
@@ -49,17 +50,20 @@ const router = createBrowserRouter([
   { path: "/bookdetails", element: <PrivateRoute element={<BookDetails />} /> },
   { path: "/dashboard", element: <PrivateRoute element={<Dashboard />} /> },
   { path: "/profilepage", element: <PrivateRoute element={<ProfilePage />} /> },
-  { path: "/pdfview", element: <PrivateRoute element={<PdfViewer />} /> },
-
+  { path: "/view", element: <PrivateRoute element={<PdfViewer bookId={"67e3186381ea21aa386a28ad"}/>} /> },
+  {path:"/results",element:<PrivateRoute element={<ExplorePage element={<SearchResultsPage/>}/>}/>,
+},
   // ✅ 404 Page
   { path: "*", element: <h1>404 - Page Not Found</h1> },
 ]);
 
 function App() {
   return (
+    <>
     <Providers>
       <RouterProvider router={router} />
     </Providers>
+    </>
   );
 }
 

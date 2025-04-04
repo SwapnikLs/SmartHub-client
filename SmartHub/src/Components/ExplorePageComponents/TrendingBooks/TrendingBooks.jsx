@@ -2,7 +2,7 @@ import React from 'react';
 import TopPickCarousel from '../../GlobalComponents/Carousel/Carousel';
 import './TrendingBooks.css';
 
-function TrendingBooks({books}) {
+function TrendingBooks({books,addTowishList}) {
 
   return (
     <div className='explore-trending'>
@@ -10,7 +10,7 @@ function TrendingBooks({books}) {
         <div className='all-books-section'>
           <h3 className='book-title'>Trending</h3>
         </div>
-        <TopPickCarousel books={books} />
+        <TopPickCarousel books={books} addTowishList={addTowishList} />
       </div>
     </div>
   );
