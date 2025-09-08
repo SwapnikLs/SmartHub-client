@@ -6,7 +6,7 @@
     width: 250px;
     height: 100%;
     transition: left 0.3s ease;
-    background: linear-gradient(90deg, rgba(15, 16, 20, 0.95) 10%, rgba(15, 16, 20, 0) 100%);
+    background-color: #1c1c1e;
     display: flex;
     flex-direction: column;
     padding-top: 20px;
@@ -39,10 +39,11 @@
     border-radius: 5px;
     white-space: nowrap;
 }
-
+.sidebar-links  *{
+    color: white;
+}
 .sidebar-links a.active {
     background-color: #222;
-    color: white;
     font-size: 16px;
     font-weight: bold;
 }
